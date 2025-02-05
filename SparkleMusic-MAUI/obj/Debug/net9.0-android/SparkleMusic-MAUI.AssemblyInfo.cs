@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SparkleMusic-MAUI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+a6a9e8f478cb5bc26ee451b27c9ecc0b226550f5")]
 [assembly: System.Reflection.AssemblyProductAttribute("SparkleMusic-MAUI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SparkleMusic-MAUI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

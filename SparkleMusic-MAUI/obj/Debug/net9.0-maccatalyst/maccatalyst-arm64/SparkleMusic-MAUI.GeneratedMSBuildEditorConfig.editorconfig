@@ -47,3 +47,9 @@ build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = SparkleMusic_MAUI.Resources.Styles.Styles.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources/Styles/Styles.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources/Styles/Styles.xaml
+
+[/Users/abtahitajwar/Documents/my-apps/SparkleMusic-MAUI/SparkleMusic-MAUI/UIDictionary/BackgroundPrimary.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SparkleMusic_MAUI.UIDictionary.BackgroundPrimary.xaml
+build_metadata.AdditionalFiles.TargetPath = UIDictionary/BackgroundPrimary.xaml
+build_metadata.AdditionalFiles.RelativePath = UIDictionary/BackgroundPrimary.xaml
