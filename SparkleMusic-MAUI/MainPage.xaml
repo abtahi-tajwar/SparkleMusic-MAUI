@@ -2,8 +2,35 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:partial="clr-namespace:SparkleMusic_MAUI.UIComponent.Button"
              x:Class="SparkleMusic_MAUI.MainPage"
              Background="{StaticResource BackgroundPrimary}">
-    <Label Text="Hello World" TextColor="White" />
-    
+    <VerticalStackLayout>
+        <Grid ColumnDefinitions="*, Auto" Padding="22, 17">
+            <Image Grid.Column="0" HorizontalOptions="StartAndExpand" Source="main_logo.png" />
+            <HorizontalStackLayout Grid.Column="1">
+                <partial:IconButton Icon="profile_icon.png"></partial:IconButton>
+                <partial:IconButton Icon="settings_icon.png"></partial:IconButton>
+            </HorizontalStackLayout>
+        </Grid>
+        <!-- Played Music Portion -->
+        <Grid
+            ColumnDefinitions="*, Auto"
+            RowDefinitions="Auto, Auto"
+            Padding="22, 18">
+            <VerticalStackLayout Grid.Column="0" Grid.Row="0">
+                <Label FontSize="20" TextColor="White" Text="Girl Band" />
+                <Label FontSize="12" TextColor="White" Text="02:30 / 05:10" />
+            </VerticalStackLayout>
+            <HorizontalStackLayout Grid.Column="1">
+                <partial:IconButton Icon="fast_backward_icon.png"></partial:IconButton>
+                <partial:IconButton Icon="pause_icon.png"></partial:IconButton>
+                <partial:IconButton Icon="fast_forward_icon.png"></partial:IconButton>
+            </HorizontalStackLayout>
+            <Slider
+                Grid.Row="1"
+                Grid.ColumnSpan="2" />
+        </Grid>
+    </VerticalStackLayout>
+
 </ContentPage>
