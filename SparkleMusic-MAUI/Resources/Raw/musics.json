@@ -1,0 +1,107 @@
+[
+  {
+    "id": 1,
+    "title": "Lost in the Echo",
+    "author": "Linkin Park",
+    "duration": "3:25",
+    "image": "music_thumb2.png"
+  },
+  {
+    "id": 2,
+    "title": "Blinding Lights",
+    "author": "The Weeknd",
+    "duration": "3:20",
+    "image": "music_thumb4.png"
+  },
+  {
+    "id": 3,
+    "title": "Shape of You",
+    "author": "Ed Sheeran",
+    "duration": "4:02",
+    "image": "music_thumb1.png"
+  },
+  {
+    "id": 4,
+    "title": "Bohemian Rhapsody",
+    "author": "Queen",
+    "duration": "5:55",
+    "image": "music_thumb3.png"
+  },
+  {
+    "id": 5,
+    "title": "Someone Like You",
+    "author": "Adele",
+    "duration": "4:45",
+    "image": "music_thumb2.png"
+  },
+  {
+    "id": 6,
+    "title": "Take on Me",
+    "author": "A-ha",
+    "duration": "3:47",
+    "image": "music_thumb1.png"
+  },
+  {
+    "id": 7,
+    "title": "Stairway to Heaven",
+    "author": "Led Zeppelin",
+    "duration": "8:02",
+    "image": "music_thumb4.png"
+  },
+  {
+    "id": 8,
+    "title": "Uptown Funk",
+    "author": "Mark Ronson ft. Bruno Mars",
+    "duration": "4:31",
+    "image": "music_thumb3.png"
+  },
+  {
+    "id": 9,
+    "title": "Thinking Out Loud",
+    "author": "Ed Sheeran",
+    "duration": "4:41",
+    "image": "music_thumb2.png"
+  },
+  {
+    "id": 10,
+    "title": "Smells Like Teen Spirit",
+    "author": "Nirvana",
+    "duration": "5:01",
+    "image": "music_thumb1.png"
+  },
+  {
+    "id": 11,
+    "title": "Billie Jean",
+    "author": "Michael Jackson",
+    "duration": "4:54",
+    "image": "music_thumb4.png"
+  },
+  {
+    "id": 12,
+    "title": "Rolling in the Deep",
+    "author": "Adele",
+    "duration": "3:48",
+    "image": "music_thumb3.png"
+  },
+  {
+    "id": 13,
+    "title": "Hotel California",
+    "author": "Eagles",
+    "duration": "6:30",
+    "image": "music_thumb1.png"
+  },
+  {
+    "id": 14,
+    "title": "Hey Jude",
+    "author": "The Beatles",
+    "duration": "7:11",
+    "image": "music_thumb2.png"
+  },
+  {
+    "id": 15,
+    "title": "Wonderwall",
+    "author": "Oasis",
+    "duration": "4:18",
+    "image": "music_thumb4.png"
+  }
+]
