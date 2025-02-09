@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using SparkleMusic_MAUI.Module.Music.Repository;
 using SparkleMusic_MAUI.Views.MainPage;
+using SparkleMusic_MAUI.Services;
 
 namespace SparkleMusic_MAUI;
 
@@ -17,6 +18,8 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
+        builder.Services.AddSingleton<AudioService>();
+        
         builder.Services.AddSingleton<MusicRepository>();
         builder.Services.AddTransient<MainPageViewModel>();
         builder.Services.AddTransient<MainPage>();
