@@ -1,3 +1,5 @@
+
+using System.Collections.Generic;
 #if ANDROID
 using Android.Content;
 using Android.Database;

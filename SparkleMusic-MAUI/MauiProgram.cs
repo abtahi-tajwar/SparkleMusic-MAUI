@@ -1,4 +1,8 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CommunityToolkit.Maui;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Controls.Hosting;
+using Microsoft.Maui.Hosting;
 using SparkleMusic_MAUI.Module.Music.Repository;
 using SparkleMusic_MAUI.Views.MainPage;
 using SparkleMusic_MAUI.Services;
@@ -12,6 +16,7 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
+            .UseMauiCommunityToolkitMediaElement()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -23,6 +28,9 @@ public static class MauiProgram
         builder.Services.AddSingleton<MusicRepository>();
         builder.Services.AddTransient<MainPageViewModel>();
         builder.Services.AddTransient<MainPage>();
+        
+        // Services
+        builder.Services.AddSingleton<StorageService>();
 
 #if DEBUG
         builder.Logging.AddDebug();

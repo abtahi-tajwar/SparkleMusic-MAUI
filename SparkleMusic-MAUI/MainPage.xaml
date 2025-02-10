@@ -5,61 +5,74 @@
              xmlns:partial="clr-namespace:SparkleMusic_MAUI.UIComponent.Button"
              xmlns:vm="clr-namespace:SparkleMusic_MAUI.Views.MainPage"
              xmlns:model="clr-namespace:SparkleMusic_MAUI.Module.Music.Entity"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="vm:MainPageViewModel"
              x:Class="SparkleMusic_MAUI.MainPage"
              Background="{StaticResource BackgroundPrimary}">
-    <Grid RowDefinitions="Auto, Auto, *">
-        <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Padding="22, 17">
-            <Image Grid.Column="0" HorizontalOptions="StartAndExpand" Source="main_logo.png" />
-            <HorizontalStackLayout Grid.Column="1">
-                <partial:IconButton Icon="profile_icon.png"></partial:IconButton>
-                <partial:IconButton Icon="settings_icon.png"></partial:IconButton>
-            </HorizontalStackLayout>
-        </Grid>
-        <!-- Played Music Portion -->
-        <Grid
-            Grid.Row="1"
-            ColumnDefinitions="*, Auto"
-            RowDefinitions="Auto, Auto"
-            Padding="22, 18">
-            <VerticalStackLayout Grid.Column="0" Grid.Row="0">
-                <Label FontSize="20" TextColor="White" Text="Girl Band" />
-                <Label FontSize="12" TextColor="White" Text="02:30 / 05:10" />
-            </VerticalStackLayout>
-            <HorizontalStackLayout Grid.Column="1">
-                <partial:IconButton Icon="fast_backward_icon.png"></partial:IconButton>
-                <partial:IconButton Icon="pause_icon.png"></partial:IconButton>
-                <partial:IconButton Icon="fast_forward_icon.png"></partial:IconButton>
-            </HorizontalStackLayout>
-            <Slider
+    <AbsoluteLayout>
+        <toolkit:MediaElement
+            Source="filesystem:///storage/emulated/0/Android/data/com.companyname.sparklemusicmaui/cache/2203693cc04e0be7f4f024d5f9499e13/3868b63ce6b8485385d9b7b7a0f74107/quartz-clock-ticking-one-minute-253102.mp3" ShouldShowPlaybackControls="True">
+        </toolkit:MediaElement>
+        <Grid AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" RowDefinitions="Auto, Auto, *">
+            <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Padding="22, 17">
+                <Image Grid.Column="0" HorizontalOptions="StartAndExpand" Source="main_logo.png" />
+                <HorizontalStackLayout Grid.Column="1">
+                    <partial:IconButton Icon="profile_icon.png"></partial:IconButton>
+                    <partial:IconButton Icon="settings_icon.png"></partial:IconButton>
+                </HorizontalStackLayout>
+            </Grid>
+            <!-- Played Music Portion -->
+            <Grid
                 Grid.Row="1"
-                Grid.ColumnSpan="2" />
-        </Grid>
-        <CollectionView Grid.Row="2" Margin="22, 0" VerticalOptions="FillAndExpand" ItemsSource="{Binding Musics}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:MusicEntity">
-                    <Grid RowDefinitions="*, Auto" >
+                ColumnDefinitions="*, Auto"
+                RowDefinitions="Auto, Auto"
+                Padding="22, 18">
+                <VerticalStackLayout Grid.Column="0" Grid.Row="0">
+                    <Label FontSize="20" TextColor="White" Text="Girl Band" />
+                    <Label FontSize="12" TextColor="White" Text="02:30 / 05:10" />
+                </VerticalStackLayout>
+                <HorizontalStackLayout Grid.Column="1">
+                    <partial:IconButton Icon="fast_backward_icon.png"></partial:IconButton>
+                    <partial:IconButton Icon="pause_icon.png"></partial:IconButton>
+                    <partial:IconButton Icon="fast_forward_icon.png"></partial:IconButton>
+                </HorizontalStackLayout>
+                <Slider
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2" />
+            </Grid>
+            <CollectionView Grid.Row="2" Margin="22, 0" VerticalOptions="FillAndExpand" ItemsSource="{Binding Musics}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:MusicEntity">
+                        <Grid RowDefinitions="*, Auto">
 
-                        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto,Auto">
-                            <Image Grid.Column="0" Source="{Binding Image}" HeightRequest="40" WidthRequest="40" />
-                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Margin="10, 0">
-                                <Label TextColor="White" Text="{Binding Title}" />
-                                <Label FontSize="10" TextColor="White" Text="{Binding Duration}" />
-                            </VerticalStackLayout>
-                            <partial:IconButton Grid.Column="2" Icon="more_icon.png" />
-                            <BoxView
-                                Grid.Column="3"
-                                BackgroundColor="{StaticResource Primary}"
-                                WidthRequest="3"
-                                VerticalOptions="Fill" />
-                            <!-- Spacer -->
+                            <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto,Auto">
+                                <Image Grid.Column="0" Source="{Binding Image}" HeightRequest="40" WidthRequest="40" />
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Margin="10, 0">
+                                    <Label TextColor="White" Text="{Binding Title}" />
+                                    <Label FontSize="10" TextColor="White" Text="{Binding Duration}" />
+                                </VerticalStackLayout>
+                                <partial:IconButton Grid.Column="2" Icon="more_icon.png" />
+                                <BoxView
+                                    Grid.Column="3"
+                                    BackgroundColor="{StaticResource Primary}"
+                                    WidthRequest="3"
+                                    VerticalOptions="Fill" />
+                                <!-- Spacer -->
+                            </Grid>
+                            <BoxView Grid.Row="1" HeightRequest="5" />
                         </Grid>
-                        <BoxView Grid.Row="1" HeightRequest="5" />
-                    </Grid>
 
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+        <Button
+            AbsoluteLayout.LayoutBounds="0.95,0.98,AutoSize,AutoSize"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            ImageSource="plus_white_icon.png" MaximumHeightRequest="40" MaximumWidthRequest="40"
+            Background="{StaticResource Accent}"
+            Command="{Binding PlusButtonClickCommand}" />
+
+    </AbsoluteLayout>
 
 </ContentPage>

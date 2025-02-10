@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using Microsoft.Maui.Controls;
 using SparkleMusic_MAUI.Services;
 using SparkleMusic_MAUI.Views.MainPage;
 namespace SparkleMusic_MAUI;
