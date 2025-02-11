@@ -2,15 +2,18 @@
 
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:button="clr-namespace:SparkleMusic_MAUI.UIComponent.Button"
+             xmlns:local="clr-namespace:SparkleMusic_MAUI.UIComponent.Button"
              x:Class="SparkleMusic_MAUI.UIComponent.Button.IconButton"
-             x:DataType="button:IconButton">
+             x:DataType="local:IconButton">
     <Button
         HeightRequest="21"
         WidthRequest="21"
         Padding="0"
         CornerRadius="21"
-        ImageSource="{Binding Icon}">
+        ImageSource="{Binding Icon}"
+        Command="{Binding Command}"
+        CommandParameter="{Binding CommandParameter}"
+        >
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroupList>
                 <VisualStateGroup Name="ButtonState">
