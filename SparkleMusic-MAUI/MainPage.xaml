@@ -7,7 +7,7 @@
              xmlns:vm="clr-namespace:SparkleMusic_MAUI.Views.MainPage"
              xmlns:model="clr-namespace:SparkleMusic_MAUI.Module.Music.Entity"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             
+
              x:Name="MainPageView"
              x:DataType="vm:MainPageViewModel"
              x:Class="SparkleMusic_MAUI.MainPage"
@@ -15,7 +15,8 @@
     <AbsoluteLayout>
         <toolkit:MediaElement
             x:Name="MyMediaElement"
-            Source="{Binding CurrentPlayingSource}" />
+            Source="{Binding CurrentPlayingSource}"
+             />
         <Grid AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" RowDefinitions="Auto, Auto, *">
             <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Padding="22, 17">
                 <Image Grid.Column="0" HorizontalOptions="StartAndExpand" Source="main_logo.png" />
@@ -31,7 +32,7 @@
                 RowDefinitions="Auto, Auto"
                 Padding="22, 18">
                 <VerticalStackLayout Grid.Column="0" Grid.Row="0">
-                    <Label FontSize="20" TextColor="White" Text="Girl Band" />
+                    <Label FontSize="20" TextColor="White" Text="{Binding CurrentPlayingName}" />
                     <Label FontSize="12" TextColor="White" Text="02:30 / 05:10" />
                 </VerticalStackLayout>
                 <HorizontalStackLayout Grid.Column="1">
@@ -55,7 +56,9 @@
                 </HorizontalStackLayout>
                 <Slider
                     Grid.Row="1"
-                    Grid.ColumnSpan="2" />
+                    Grid.ColumnSpan="2"
+                    Maximum="{Binding CurrentPlayingMusicDurationInMilliSeconds}"
+                    Value="{Binding CurrentPlayingPositionInMilliSeconds, Mode=TwoWay}" />
             </Grid>
             <CollectionView
                 SelectionMode="Single"

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Windows.Input;
 using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -22,21 +23,59 @@ public partial class MainPageViewModel : ObservableObject
     [ObservableProperty] private ObservableCollection<MusicEntity> musics = new();
 
     [ObservableProperty] private MediaSource currentPlayingSource;
+    [ObservableProperty] private double currentPlayingPositionInMilliSeconds;
+    [ObservableProperty] private double currentPlayingMusicDurationInMilliSeconds;
+    [ObservableProperty] private MediaElement? customMediaElement;
+    [ObservableProperty] private bool? customMediaElementRegistered;
+    [ObservableProperty] private string currentPlayingName = "Default Music";
     [ObservableProperty] private bool isPlaying;
+
+    public ICommand SliderSeekCommand { get; }
 
 
     public MainPageViewModel(MusicRepository musicRepository, StorageService storageService)
     {
         _musicRepository = musicRepository;
         _storageService = storageService;
+        SliderSeekCommand = new RelayCommand<double>(HandleSliderSeek);
         CurrentPlayingSource =
             MediaSource.FromFile(
                 "/storage/emulated/0/Android/data/com.companyname.sparklemusicmaui/cache/2203693cc04e0be7f4f024d5f9499e13/7b47fe1fd19d422896cff22c92669e97/sunflower-street-drumloop-85bpm-163900.mp3");
     }
 
-    public void Initialize()
+
+    partial void OnCustomMediaElementChanged(MediaElement? element)
+    {
+        if (element != null)
+        {
+            if (CustomMediaElementRegistered == true)
+            {
+                element.PositionChanged += ((sender, args) =>
+                {
+                    CurrentPlayingPositionInMilliSeconds = args.Position.TotalMilliseconds;
+                });
+                element.SeekCompleted += (sender, args) =>
+                {
+                    CurrentPlayingPositionInMilliSeconds = element.Position.TotalMilliseconds;
+                };
+            }
+        }
+    }
+
+    partial void OnCurrentPlayingSourceChanged(MediaSource source)
+    {
+        if (CustomMediaElement != null)
+        {
+            var duration = CustomMediaElement.Duration;
+            CurrentPlayingMusicDurationInMilliSeconds = duration.Milliseconds;
+        }
+    }
+
+    public void Initialize(MediaElement mediaElement)
     {
         InitializeMusics();
+        CustomMediaElementRegistered = true;
+        CustomMediaElement = mediaElement;
     }
 
     private async void InitializeMusics()
@@ -81,13 +120,15 @@ public partial class MainPageViewModel : ObservableObject
     }
 
 
-    public void HandlePlay(MediaElement mediaElement)
+    public void HandlePlay()
     {
-        mediaElement.Play();
+        CustomMediaElement.Play();
         IsPlaying = true;
-    }public void HandlePause(MediaElement mediaElement)
+    }
+
+    public void HandlePause()
     {
-        mediaElement.Pause();
+        CustomMediaElement.Pause();
         IsPlaying = false;
     }
 
@@ -105,6 +146,16 @@ public partial class MainPageViewModel : ObservableObject
         {
             CurrentPlayingSource = MediaSource.FromFile(music.Source);
         }
+
+        CurrentPlayingName = music.Title;
         OnPlayMusicRequested?.Invoke();
+    }
+    
+    private void HandleSliderSeek(double position)
+    {
+        if (CustomMediaElement != null)
+        {
+            CustomMediaElement.SeekTo(TimeSpan.FromMilliseconds(position));
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows.Input;
+using CommunityToolkit.Maui.Core.Primitives;
 using Microsoft.Maui.Controls;
 using SparkleMusic_MAUI.Services;
 using SparkleMusic_MAUI.Views.MainPage;
@@ -28,11 +29,11 @@ public partial class MainPage : ContentPage
     {
         try
         {
-            _viewModel.Initialize();
-            // var musics = _audioService.GetAllMusicFilesAsync();
+            _viewModel.Initialize(MyMediaElement);
+            var musics = _audioService.GetAllMusicFilesAsync();
             Debug.WriteLine("MusicFetched");
         }
-        catch (Exception e)
+        catch (Exception e) 
         {
             Debug.WriteLine("Initialization Failed");
         }
@@ -41,12 +42,11 @@ public partial class MainPage : ContentPage
 
     private void PlayMusic()
     {
-        _viewModel.HandlePlay(MyMediaElement);
+        _viewModel.HandlePlay();
     }
 
     private void PauseMusic()
     {
-        _viewModel.HandlePause(MyMediaElement);
+        _viewModel.HandlePause();
     }
-    
 }
