@@ -11,7 +11,7 @@ public partial class MainPage : ContentPage
 {
     private MainPageViewModel _viewModel;
     private readonly AudioService _audioService;
-    public ICommand PlayCommand { get; }
+    
     public MainPage(MainPageViewModel viewModel, AudioService audioService)
     {
         InitializeComponent();
@@ -22,6 +22,17 @@ public partial class MainPage : ContentPage
         CustomPlayButton.Command = new Command(PlayMusic);
         CustomPauseButton.Command = new Command(PauseMusic);
         _viewModel.OnPlayMusicRequested += PlayMusic;
+        
+        MyMediaElement.MediaOpened += async (sender, e) =>
+        {
+            await Task.Delay(200);
+            _viewModel.HandleUpdateMusicDuration(MyMediaElement);
+        };
+        
+        CurrentSongSeeker.DragCompletedCommand = new Command(() =>
+        {
+            _viewModel.HandleSeekToPosition(CurrentSongSeeker, MyMediaElement);
+        });
 
     }
 

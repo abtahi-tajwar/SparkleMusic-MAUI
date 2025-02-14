@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.Input;
 using SparkleMusic_MAUI.Module.Music.Entity;
 using SparkleMusic_MAUI.Module.Music.Repository;
 using SparkleMusic_MAUI.Services;
+using SparkleMusic_MAUI.Utils;
 
 namespace SparkleMusic_MAUI.Views.MainPage;
 
@@ -25,57 +26,55 @@ public partial class MainPageViewModel : ObservableObject
     [ObservableProperty] private MediaSource currentPlayingSource;
     [ObservableProperty] private double currentPlayingPositionInMilliSeconds;
     [ObservableProperty] private double currentPlayingMusicDurationInMilliSeconds;
+    [ObservableProperty] private string currentPositionTimeString = "00:00";
+    [ObservableProperty] private string totalDurationTimeString = "00:00";
     [ObservableProperty] private MediaElement? customMediaElement;
-    [ObservableProperty] private bool? customMediaElementRegistered;
+
     [ObservableProperty] private string currentPlayingName = "Default Music";
     [ObservableProperty] private bool isPlaying;
-
-    public ICommand SliderSeekCommand { get; }
 
 
     public MainPageViewModel(MusicRepository musicRepository, StorageService storageService)
     {
         _musicRepository = musicRepository;
         _storageService = storageService;
-        SliderSeekCommand = new RelayCommand<double>(HandleSliderSeek);
         CurrentPlayingSource =
             MediaSource.FromFile(
                 "/storage/emulated/0/Android/data/com.companyname.sparklemusicmaui/cache/2203693cc04e0be7f4f024d5f9499e13/7b47fe1fd19d422896cff22c92669e97/sunflower-street-drumloop-85bpm-163900.mp3");
     }
 
 
-    partial void OnCustomMediaElementChanged(MediaElement? element)
+    private void RegisterMediaElementEvents(MediaElement element)
     {
-        if (element != null)
+        element.PositionChanged += ((sender, args) =>
         {
-            if (CustomMediaElementRegistered == true)
-            {
-                element.PositionChanged += ((sender, args) =>
-                {
-                    CurrentPlayingPositionInMilliSeconds = args.Position.TotalMilliseconds;
-                });
-                element.SeekCompleted += (sender, args) =>
-                {
-                    CurrentPlayingPositionInMilliSeconds = element.Position.TotalMilliseconds;
-                };
-            }
-        }
+            CurrentPlayingPositionInMilliSeconds = args.Position.TotalMilliseconds;
+            CurrentPositionTimeString = Helper.ConvertToTimeStringFromMilliseconds(args.Position.TotalMilliseconds);
+        });
     }
 
-    partial void OnCurrentPlayingSourceChanged(MediaSource source)
+    public void HandleUpdateMusicDuration(MediaElement mediaElement)
     {
-        if (CustomMediaElement != null)
-        {
-            var duration = CustomMediaElement.Duration;
-            CurrentPlayingMusicDurationInMilliSeconds = duration.Milliseconds;
-        }
+        TimeSpan duration = mediaElement.Duration;
+        Debug.WriteLine($"Total Duration {TotalDurationTimeString}");
+        Debug.WriteLine($"Duration: {duration.ToString()}");
+        CurrentPlayingMusicDurationInMilliSeconds = duration.TotalMilliseconds;
+        TotalDurationTimeString = Helper.ConvertToTimeStringFromMilliseconds(duration.TotalMilliseconds);
+    }
+
+    public void HandleSeekToPosition(Slider seeker, MediaElement mediaElement)
+    {
+        Debug.WriteLine($"Seek to position: {seeker.Value}");
+        CurrentPlayingPositionInMilliSeconds = seeker.Value;
+        TimeSpan position = TimeSpan.FromMilliseconds(seeker.Value);
+        mediaElement.SeekTo(position);
     }
 
     public void Initialize(MediaElement mediaElement)
     {
         InitializeMusics();
-        CustomMediaElementRegistered = true;
         CustomMediaElement = mediaElement;
+        RegisterMediaElementEvents(mediaElement);
     }
 
     private async void InitializeMusics()
@@ -122,21 +121,18 @@ public partial class MainPageViewModel : ObservableObject
 
     public void HandlePlay()
     {
+        if (CustomMediaElement == null) return;
         CustomMediaElement.Play();
         IsPlaying = true;
     }
 
     public void HandlePause()
     {
+        if (CustomMediaElement == null) return;
         CustomMediaElement.Pause();
         IsPlaying = false;
     }
-
-    [RelayCommand]
-    private async Task OnPlayButtonClick()
-    {
-        Debug.WriteLine("Play");
-    }
+    
 
     [RelayCommand]
     private async Task OnMusicSelect(MusicEntity music)
@@ -144,18 +140,10 @@ public partial class MainPageViewModel : ObservableObject
         Debug.WriteLine("MusicSelected");
         if (music.Source != null)
         {
-            CurrentPlayingSource = MediaSource.FromFile(music.Source);
+            CurrentPlayingSource = MediaSource.FromFile(Uri.EscapeDataString(music.Source));
         }
 
         CurrentPlayingName = music.Title;
         OnPlayMusicRequested?.Invoke();
-    }
-    
-    private void HandleSliderSeek(double position)
-    {
-        if (CustomMediaElement != null)
-        {
-            CustomMediaElement.SeekTo(TimeSpan.FromMilliseconds(position));
-        }
     }
 }

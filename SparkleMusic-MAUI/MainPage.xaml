@@ -15,8 +15,7 @@
     <AbsoluteLayout>
         <toolkit:MediaElement
             x:Name="MyMediaElement"
-            Source="{Binding CurrentPlayingSource}"
-             />
+            Source="{Binding CurrentPlayingSource}" />
         <Grid AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" RowDefinitions="Auto, Auto, *">
             <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Padding="22, 17">
                 <Image Grid.Column="0" HorizontalOptions="StartAndExpand" Source="main_logo.png" />
@@ -33,7 +32,15 @@
                 Padding="22, 18">
                 <VerticalStackLayout Grid.Column="0" Grid.Row="0">
                     <Label FontSize="20" TextColor="White" Text="{Binding CurrentPlayingName}" />
-                    <Label FontSize="12" TextColor="White" Text="02:30 / 05:10" />
+                    <Label FontSize="12" TextColor="White" >
+                        <Label.Text>
+                            <MultiBinding StringFormat="{}{0} / {1}">
+                                <Binding Path="CurrentPositionTimeString" />
+                                <Binding Path="TotalDurationTimeString" />
+                            </MultiBinding>
+                        </Label.Text>
+                    </Label>
+                    
                 </VerticalStackLayout>
                 <HorizontalStackLayout Grid.Column="1">
                     <partial:IconButton Icon="fast_backward_icon.png"></partial:IconButton>
@@ -57,8 +64,9 @@
                 <Slider
                     Grid.Row="1"
                     Grid.ColumnSpan="2"
+                    x:Name="CurrentSongSeeker"
                     Maximum="{Binding CurrentPlayingMusicDurationInMilliSeconds}"
-                    Value="{Binding CurrentPlayingPositionInMilliSeconds, Mode=TwoWay}" />
+                    Value="{Binding CurrentPlayingPositionInMilliSeconds}"/>
             </Grid>
             <CollectionView
                 SelectionMode="Single"
