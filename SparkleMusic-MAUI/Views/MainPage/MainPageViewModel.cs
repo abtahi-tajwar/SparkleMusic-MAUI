@@ -20,10 +20,14 @@ public partial class MainPageViewModel : ObservableObject
     // Privates
     private readonly MusicRepository _musicRepository;
     private readonly StorageService _storageService;
+    private readonly AudioService _audioService;
 
     [ObservableProperty] private ObservableCollection<MusicEntity> musics = new();
 
-    [ObservableProperty] private MediaSource currentPlayingSource;
+    [ObservableProperty] 
+    [NotifyPropertyChangedFor(nameof(showCurrentMusicControls))]
+    private MediaSource? currentPlayingSource;
+    public bool showCurrentMusicControls => CurrentPlayingSource != null;
     [ObservableProperty] private double currentPlayingPositionInMilliSeconds;
     [ObservableProperty] private double currentPlayingMusicDurationInMilliSeconds;
     [ObservableProperty] private string currentPositionTimeString = "00:00";
@@ -34,13 +38,13 @@ public partial class MainPageViewModel : ObservableObject
     [ObservableProperty] private bool isPlaying;
 
 
-    public MainPageViewModel(MusicRepository musicRepository, StorageService storageService)
+    public MainPageViewModel(MusicRepository musicRepository, StorageService storageService, AudioService audioService)
     {
         _musicRepository = musicRepository;
+        _audioService = audioService;
         _storageService = storageService ?? throw new ArgumentNullException(nameof(storageService));
-        CurrentPlayingSource =
-            MediaSource.FromFile(
-                "/storage/emulated/0/Android/data/com.companyname.sparklemusicmaui/cache/2203693cc04e0be7f4f024d5f9499e13/7b47fe1fd19d422896cff22c92669e97/sunflower-street-drumloop-85bpm-163900.mp3");
+        CurrentPlayingSource = null;
+
     }
 
 
@@ -81,9 +85,20 @@ public partial class MainPageViewModel : ObservableObject
     {
         try
         {
-            var musicPlaceholderData = await _musicRepository.GetAllPlaceholders();
+            List<MusicEntity> musics = new();
+            // var musicPlaceholderData = await _musicRepository.GetAllPlaceholders();
             var musicData = await _musicRepository.GetAll();
-            Musics = new ObservableCollection<MusicEntity>(musicPlaceholderData.Concat(musicData).ToList());
+            var fetchedMusic = await _audioService.GetAllMusicFilesAsync();
+            musics = musicData;
+            foreach (var m in fetchedMusic)
+            {
+                if (musics.Find(item => item.Source == m.Source) == null)
+                {
+                    musics.Add(m);
+                }
+            }
+            // Musics = new ObservableCollection<MusicEntity>(musicPlaceholderData.Concat(musicData).ToList());
+            Musics = new ObservableCollection<MusicEntity>(musics);
             Debug.WriteLine($"Musics {Musics.Count}");
         }
         catch (Exception e)
@@ -105,6 +120,9 @@ public partial class MainPageViewModel : ObservableObject
         IEnumerable<FileResult>? files = null;
         files = await _storageService.PickFilesAsync(null);
         var importedMusics = new List<MusicEntity>();
+
+        string[] thumbnails = ["music_thumb1.png", "music_thumb2.png", "music_thumb3.png", "music_thumb4.png"];
+        Random random = new Random();
         foreach (var file in files)
         {
             var musicEntry = new MusicEntity()
@@ -113,7 +131,7 @@ public partial class MainPageViewModel : ObservableObject
                 Title = file.FileName,
                 Author = "",
                 Duration = "",
-                Image = "music_thumb1.png",
+                Image = Helper.GetRandomThumbnail(),
                 Source = file.FullPath
             };
             

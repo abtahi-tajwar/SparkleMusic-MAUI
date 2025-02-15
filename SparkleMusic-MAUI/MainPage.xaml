@@ -26,6 +26,7 @@
             </Grid>
             <!-- Played Music Portion -->
             <Grid
+                IsVisible="{Binding showCurrentMusicControls}"
                 Grid.Row="1"
                 ColumnDefinitions="*, Auto"
                 RowDefinitions="Auto, Auto"
@@ -74,6 +75,14 @@
                 Margin="22, 0"
                 VerticalOptions="FillAndExpand"
                 ItemsSource="{Binding Musics}">
+                <CollectionView.EmptyView>
+                    <StackLayout Spacing="10" Margin="0, 100" Padding="20" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Image Source="empty_list.png" HeightRequest="100"/>
+                        <Label HorizontalTextAlignment="Center" Text="No songs found!" FontSize="18" TextColor="Gray"/>
+                        <Button Command="{Binding PlusButtonClickCommand}" HeightRequest="40" MaximumHeightRequest="40" ImageSource="plus_white_icon.png" Text="Start Importing" />
+                    </StackLayout>
+
+                </CollectionView.EmptyView>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:MusicEntity">
                         <Grid RowDefinitions="*, Auto">

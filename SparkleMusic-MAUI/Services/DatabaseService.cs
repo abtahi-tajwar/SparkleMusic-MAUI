@@ -6,7 +6,7 @@ namespace SparkleMusic_MAUI.Services;
 
 public class DatabaseService
 {
-    SQLiteAsyncConnection Database;
+    public SQLiteAsyncConnection DatabaseConnection;
 
     public DatabaseService()
     {
@@ -15,10 +15,10 @@ public class DatabaseService
 
     async Task Init()
     {
-        if (Database is not null)
+        if (DatabaseConnection is not null)
             return;
         
-        Database = new SQLiteAsyncConnection(AppDbConfig.DatabasePath, AppDbConfig.Flags);
-        var result = await Database.CreateTableAsync<MusicEntity>();
+        DatabaseConnection = new SQLiteAsyncConnection(AppDbConfig.DatabasePath, AppDbConfig.Flags);
+        var result = await DatabaseConnection.CreateTableAsync<MusicEntity>();
     }
 }

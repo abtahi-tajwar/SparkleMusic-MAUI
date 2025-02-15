@@ -4,15 +4,16 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Maui.Storage;
 using SparkleMusic_MAUI.Module.Music.Entity;
+using SparkleMusic_MAUI.Services;
 using SQLite;
 
 namespace SparkleMusic_MAUI.Module.Music.Repository;
 
 public class MusicRepository
 {
-    SQLiteAsyncConnection _dbContext;
+    DatabaseService _dbContext;
 
-    public MusicRepository(SQLiteAsyncConnection dbContext)
+    public MusicRepository(DatabaseService dbContext)
     {
         _dbContext = dbContext;
     }
@@ -28,18 +29,20 @@ public class MusicRepository
     
     public async Task<List<MusicEntity>> GetAll()
     {
-        return await _dbContext.Table<MusicEntity>().ToListAsync();
+        var connection = _dbContext.DatabaseConnection;
+        return await connection.Table<MusicEntity>().ToListAsync();
     }
 
     public async Task SaveMusicsAsync(List<MusicEntity> musics)
     {
-        var existingMusics = await _dbContext.Table<MusicEntity>().ToListAsync() ?? new List<MusicEntity>();
+        var connection = _dbContext.DatabaseConnection;
+        var existingMusics = await connection.Table<MusicEntity>().ToListAsync() ?? new List<MusicEntity>();
 
         foreach (var music in musics)
         {
             if (existingMusics.Any(item => item.Source == music.Source) == false)
             {
-                await _dbContext.InsertAsync(music);
+                await connection.InsertAsync(music);
             }
         }
     }
