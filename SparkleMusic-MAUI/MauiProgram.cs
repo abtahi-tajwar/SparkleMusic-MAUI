@@ -31,6 +31,7 @@ public static class MauiProgram
         
         // Services
         builder.Services.AddSingleton<StorageService>();
+        builder.Services.AddSingleton<DatabaseService>();
 
 #if DEBUG
         builder.Logging.AddDebug();

@@ -1,10 +1,12 @@
 using System.Text.Json.Serialization;
+using SQLite;
 
 namespace SparkleMusic_MAUI.Module.Music.Entity;
 
 public class MusicEntity
 {
     [JsonPropertyName("id")]
+    [PrimaryKey, AutoIncrement]
     public int Id { get; set; }
     [JsonPropertyName("title")]
     public string Title { get; set; }

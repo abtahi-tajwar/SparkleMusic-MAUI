@@ -37,7 +37,7 @@ public partial class MainPageViewModel : ObservableObject
     public MainPageViewModel(MusicRepository musicRepository, StorageService storageService)
     {
         _musicRepository = musicRepository;
-        _storageService = storageService;
+        _storageService = storageService ?? throw new ArgumentNullException(nameof(storageService));
         CurrentPlayingSource =
             MediaSource.FromFile(
                 "/storage/emulated/0/Android/data/com.companyname.sparklemusicmaui/cache/2203693cc04e0be7f4f024d5f9499e13/7b47fe1fd19d422896cff22c92669e97/sunflower-street-drumloop-85bpm-163900.mp3");
@@ -81,8 +81,9 @@ public partial class MainPageViewModel : ObservableObject
     {
         try
         {
+            var musicPlaceholderData = await _musicRepository.GetAllPlaceholders();
             var musicData = await _musicRepository.GetAll();
-            Musics = new ObservableCollection<MusicEntity>(musicData);
+            Musics = new ObservableCollection<MusicEntity>(musicPlaceholderData.Concat(musicData).ToList());
             Debug.WriteLine($"Musics {Musics.Count}");
         }
         catch (Exception e)
@@ -101,10 +102,12 @@ public partial class MainPageViewModel : ObservableObject
     [RelayCommand]
     private async void OnPlusButtonClick()
     {
-        var files = await _storageService.PickFilesAsync(null);
+        IEnumerable<FileResult>? files = null;
+        files = await _storageService.PickFilesAsync(null);
+        var importedMusics = new List<MusicEntity>();
         foreach (var file in files)
         {
-            Musics.Add(new()
+            var musicEntry = new MusicEntity()
             {
                 Id = 22,
                 Title = file.FileName,
@@ -112,9 +115,13 @@ public partial class MainPageViewModel : ObservableObject
                 Duration = "",
                 Image = "music_thumb1.png",
                 Source = file.FullPath
-            });
+            };
+            
+            importedMusics.Add(musicEntry);
+            Musics.Add(musicEntry);
         }
-
+        
+        await _musicRepository.SaveMusicsAsync(importedMusics);
         Debug.WriteLine("File Received");
     }
 
