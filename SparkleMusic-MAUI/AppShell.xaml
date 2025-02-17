@@ -9,30 +9,28 @@
     xmlns:download="clr-namespace:SparkleMusic_MAUI.Views.YoutubeDownloadPage"
     Shell.FlyoutBehavior="Flyout"
     Title="SparkleMusic_MAUI"
+    TabBarUnselectedColor="{StaticResource PrimaryBackground}"
     NavBarIsVisible="False"
     >
     <TabBar>
-
         <ShellContent
             Title="Musics"
             Icon="music_icon.png"
             ContentTemplate="{DataTemplate local:MainPage}"
             Route="MainPage" 
-            Style="{StaticResource TabStyle}"
+            
             />
         <ShellContent
             Title="Download"
             Icon="download_icon.png"
             ContentTemplate="{DataTemplate album:AlbumPage}"
             Route="DownloadPage"
-            Style="{StaticResource TabStyle}"
             />
         <ShellContent
             Title="Albums"
             Icon="album_icon.png"
             ContentTemplate="{DataTemplate download:YoutubeDownloadPage}"
             Route="AlbumPage" 
-            Style="{StaticResource TabStyle}"
             />
     </TabBar>
 

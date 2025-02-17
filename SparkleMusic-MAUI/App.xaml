@@ -15,25 +15,25 @@
         </ResourceDictionary>
         
         <!-- Tab Style -->
-        <ResourceDictionary>
-            <Style x:Key="TabStyle" TargetType="ShellContent">
-                <Setter Property="VisualStateManager.VisualStateGroups">
-                    <VisualStateManager.VisualStateGroups>
-                        <VisualStateGroup Name="CommonStates">
-                            <VisualState Name="Normal">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{StaticResource PrimaryBackground}"/>
-                                </VisualState.Setters>
-                            </VisualState>
-                            <VisualState Name="Selected">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{StaticResource Primary}"/>
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateManager.VisualStateGroups>
-                </Setter>
-            </Style>
-        </ResourceDictionary>
+        <!-- <ResourceDictionary> -->
+        <!--     <Style x:Key="TabStyle" TargetType="ShellContent"> -->
+        <!--         <Setter Property="VisualStateManager.VisualStateGroups"> -->
+        <!--             <VisualStateManager.VisualStateGroups> -->
+        <!--                 <VisualStateGroup Name="CommonStates"> -->
+        <!--                     <VisualState Name="Normal"> -->
+        <!--                         <VisualState.Setters> -->
+        <!--                             <Setter Property="BackgroundColor" Value="{StaticResource PrimaryBackground}"/> -->
+        <!--                         </VisualState.Setters> -->
+        <!--                     </VisualState> -->
+        <!--                     <VisualState Name="Selected"> -->
+        <!--                         <VisualState.Setters> -->
+        <!--                             <Setter Property="BackgroundColor" Value="{StaticResource Primary}"/> -->
+        <!--                         </VisualState.Setters> -->
+        <!--                     </VisualState> -->
+        <!--                 </VisualStateGroup> -->
+        <!--             </VisualStateManager.VisualStateGroups> -->
+        <!--         </Setter> -->
+        <!--     </Style> -->
+        <!-- </ResourceDictionary> -->
     </Application.Resources>
 </Application>

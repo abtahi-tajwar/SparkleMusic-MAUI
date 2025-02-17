@@ -22,8 +22,7 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
-
-        builder.Services.AddSingleton<AudioService>();
+        
         
         builder.Services.AddSingleton<MusicRepository>();
         builder.Services.AddTransient<MainPageViewModel>();
@@ -32,7 +31,13 @@ public static class MauiProgram
         // Services
         builder.Services.AddSingleton<StorageService>();
         builder.Services.AddSingleton<DatabaseService>();
+        // builder.Services.AddSingleton<IAudioService, AudioService>();
 
+        #if ANDROID
+        builder.Services.AddSingleton<IAudioService, AudioService_Android>();
+        #else
+        builder.Services.AddSingleton<IAudioService, DefaultAudioService>();
+        #endif
 #if DEBUG
         builder.Logging.AddDebug();
 #endif

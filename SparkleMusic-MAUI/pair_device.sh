@@ -9,12 +9,18 @@ check_adb() {
     fi
 }
 
-# Function to prompt user for input
+# Function to prompt user for input with default values
 get_user_input() {
-    read -p "Enter Device IP (e.g., 192.168.1.100): " DEVICE_IP
-    read -p "Enter Pairing Port (e.g., 37123): " PAIRING_PORT
-    read -p "Enter Pairing Code: " PAIRING_CODE
-    read -p "Enter Debugging Port (e.g., 5555): " DEBUG_PORT
+    read -p "Enter Device IP (default: 192.168.2.27): " DEVICE_IP
+    DEVICE_IP=${DEVICE_IP:-192.168.2.27}  # Use default if empty
+
+    read -p "Enter Pairing Port (default: 46799): " PAIRING_PORT
+    PAIRING_PORT=${PAIRING_PORT:-46799}  # Use default if empty
+
+    read -p "Enter Pairing Code: " PAIRING_CODE  # No default, must be entered
+
+    read -p "Enter Debugging Port (default: 5555): " DEBUG_PORT
+    DEBUG_PORT=${DEBUG_PORT:-5555}  # Use default if empty
 }
 
 # Function to pair and connect device

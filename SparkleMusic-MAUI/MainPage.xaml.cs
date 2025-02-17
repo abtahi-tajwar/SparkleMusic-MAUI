@@ -10,9 +10,9 @@ namespace SparkleMusic_MAUI;
 public partial class MainPage : ContentPage
 {
     private MainPageViewModel _viewModel;
-    private readonly AudioService _audioService;
+    private readonly IAudioService _audioService;
     
-    public MainPage(MainPageViewModel viewModel, AudioService audioService)
+    public MainPage(MainPageViewModel viewModel, IAudioService audioService)
     {
         InitializeComponent();
         BindingContext = viewModel;

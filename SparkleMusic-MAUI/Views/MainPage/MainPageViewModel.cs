@@ -20,7 +20,7 @@ public partial class MainPageViewModel : ObservableObject
     // Privates
     private readonly MusicRepository _musicRepository;
     private readonly StorageService _storageService;
-    private readonly AudioService _audioService;
+    private readonly IAudioService _audioService;
 
     [ObservableProperty] private ObservableCollection<MusicEntity> musics = new();
 
@@ -38,7 +38,7 @@ public partial class MainPageViewModel : ObservableObject
     [ObservableProperty] private bool isPlaying;
 
 
-    public MainPageViewModel(MusicRepository musicRepository, StorageService storageService, AudioService audioService)
+    public MainPageViewModel(MusicRepository musicRepository, StorageService storageService, IAudioService audioService)
     {
         _musicRepository = musicRepository;
         _audioService = audioService;
