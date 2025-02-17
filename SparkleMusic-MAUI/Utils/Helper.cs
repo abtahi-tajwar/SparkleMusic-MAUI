@@ -11,12 +11,9 @@ public class Helper
 
     public static string GetRandomThumbnail()
     {
-        string[] thumbnails = { "music_thumb1.png", "music_thumb2.png", "music_thumb3.png", "music_thumb4.png" };
-        
-        Random random = new Random();
-        int index = random.Next(thumbnails.Length); // Get a random index
-        
-        return thumbnails[index]; // Return the random thumbnail
+        Random rand = new Random();
+        int randomNumber = rand.Next(1, 13); // Generates a number between 1 and 12
+        return $"t{randomNumber}.webp";
 
     }
 }
