@@ -1,4 +1,5 @@
 using SparkleMusic_MAUI.Database;
+using SparkleMusic_MAUI.Module.Album.Entity;
 using SparkleMusic_MAUI.Module.Music.Entity;
 using SQLite;
 
@@ -19,6 +20,7 @@ public class DatabaseService
             return;
         
         DatabaseConnection = new SQLiteAsyncConnection(AppDbConfig.DatabasePath, AppDbConfig.Flags);
-        var result = await DatabaseConnection.CreateTableAsync<MusicEntity>();
+        await DatabaseConnection.CreateTableAsync<MusicEntity>();
+        await DatabaseConnection.CreateTableAsync<AlbumEntity>();
     }
 }

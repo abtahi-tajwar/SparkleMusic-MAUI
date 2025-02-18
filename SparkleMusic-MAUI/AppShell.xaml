@@ -23,13 +23,13 @@
         <ShellContent
             Title="Download"
             Icon="download_icon.png"
-            ContentTemplate="{DataTemplate album:AlbumPage}"
+            ContentTemplate="{DataTemplate download:YoutubeDownloadPage}"
             Route="DownloadPage"
             />
         <ShellContent
             Title="Albums"
             Icon="album_icon.png"
-            ContentTemplate="{DataTemplate download:YoutubeDownloadPage}"
+            ContentTemplate="{DataTemplate album:AlbumPage}"
             Route="AlbumPage" 
             />
     </TabBar>

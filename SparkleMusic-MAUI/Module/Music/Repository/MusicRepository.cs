@@ -30,6 +30,7 @@ public class MusicRepository
     public async Task<List<MusicEntity>> GetAll()
     {
         var connection = _dbContext.DatabaseConnection;
+        
         return await connection.Table<MusicEntity>().ToListAsync();
     }
 

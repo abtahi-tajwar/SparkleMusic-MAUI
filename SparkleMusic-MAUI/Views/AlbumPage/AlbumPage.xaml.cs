@@ -8,8 +8,17 @@ namespace SparkleMusic_MAUI.Views.AlbumPage;
 
 public partial class AlbumPage : ContentPage
 {
-    public AlbumPage()
+    private AlbumPageViewModel _viewModel;
+    public AlbumPage(AlbumPageViewModel viewModel)
     {
         InitializeComponent();
+        BindingContext = viewModel;
+        _viewModel = viewModel;
+    }
+
+    protected override void OnAppearing()
+    {
+        _ = _viewModel.Initialize();
+        base.OnAppearing();
     }
 }

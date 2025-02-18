@@ -1,13 +1,20 @@
 #if ANDROID
+using Android.Content;
 using Android.Provider;
 using SparkleMusic_MAUI.Module.Album.Entity;
 using SparkleMusic_MAUI.Module.Music.Entity;
 using SparkleMusic_MAUI.Utils;
+using Uri = Android.Net.Uri;
 
 namespace SparkleMusic_MAUI.Services;
 
 public class AudioService_Android : IAudioService
 {
+    private DatabaseService _databaseService;
+    public AudioService_Android(DatabaseService databaseService)
+    {
+        _databaseService = databaseService;
+    }
     private async Task<bool> CheckAndRequestStoragePermission()
     {
         var status = await Permissions.CheckStatusAsync<Permissions.StorageRead>();
@@ -106,11 +113,14 @@ public class AudioService_Android : IAudioService
         return musicFiles;
     }
 
-    public async Task<List<AlbumEntity>> GetAllAlbums()
+    public async Task<List<RetreivedAlbumEntity>> RetreiveAlbumsAsync()
     {
-        List<AlbumEntity> albums = new();
+        List<RetreivedAlbumEntity> albums = new();
         var permissionGranted = await CheckAndRequestStoragePermission();
         if (!permissionGranted) return albums;
+
+        var mediaPermission = await CheckAndRequestMediaPermission();
+        if (!mediaPermission) return albums;
         
         // Get Android context
         var context = Platform.CurrentActivity ?? Android.App.Application.Context;
@@ -123,24 +133,29 @@ public class AudioService_Android : IAudioService
             MediaStore.Audio.Albums.InterfaceConsts.Artist,
         };
 
-        using (var cursor = context.ContentResolver.Query(uri, projection, null, null, MediaStore.Audio.Albums.InterfaceConsts.Album + " ASC"))
+        using (var cursor = context.ContentResolver?.Query(uri, projection, null, null,
+                   MediaStore.Audio.Albums.InterfaceConsts.Album + " ASC"))
         {
             if (cursor != null && cursor.MoveToFirst())
             {
+                int idColumn = cursor.GetColumnIndex(MediaStore.Audio.Albums.InterfaceConsts.Id);
                 int albumColumn = cursor.GetColumnIndex(MediaStore.Audio.Albums.InterfaceConsts.Album);
                 int artistColumn = cursor.GetColumnIndex(MediaStore.Audio.Albums.InterfaceConsts.Artist);
 
                 do
                 {
-                    string? albumId = cursor.GetString(albumColumn);
+                    string? albumId = cursor.GetString(idColumn);
                     string albumName = cursor.GetString(albumColumn) ?? "Unknown Album";
                     string artistName = cursor.GetString(artistColumn) ?? "Unknown Artist";
-
-                    albums.Add(new AlbumEntity
+                    
+                    // Get Album Art URI
+                    Uri? albumArtUri = GetAlbumArtUri(context, albumId);
+                    
+                    albums.Add(new RetreivedAlbumEntity()
                     {
                         AlbumName = albumName,
                         Artist = artistName,
-                        ExternalId = albumId
+                        Artwork = albumArtUri?.Path
                     });
 
                 } while (cursor.MoveToNext());
@@ -151,6 +166,25 @@ public class AudioService_Android : IAudioService
 
         return albums;
 
+    }
+    
+    private Uri GetAlbumArtUri(Context context, string? albumId)
+    {
+        if (string.IsNullOrEmpty(albumId)) return null;
+
+        var uri = MediaStore.Audio.Media.ExternalContentUri;
+        string[] projection = { MediaStore.Audio.Media.InterfaceConsts.AlbumId };
+
+        using (var cursor = context.ContentResolver.Query(uri, projection,
+                   $"{MediaStore.Audio.Media.InterfaceConsts.AlbumId} = ?", 
+                   new string[] { albumId }, null))
+        {
+            if (cursor?.MoveToFirst() == true)
+            {
+                return ContentUris.WithAppendedId(uri, long.Parse(albumId));
+            }
+        }
+        return null;
     }
 }
 #endif
