@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:button="clr-namespace:SparkleMusic_MAUI.UIComponent.Button"
+             x:Class="SparkleMusic_MAUI.UIComponent.Navbar.Navbar">
+    <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Padding="22, 17">
+        <Image Grid.Column="0" HorizontalOptions="StartAndExpand" Source="main_logo.png" />
+        <HorizontalStackLayout Grid.Column="1">
+            <button:IconButton Icon="profile_icon.png"></button:IconButton>
+            <button:IconButton Icon="settings_icon.png"></button:IconButton>
+        </HorizontalStackLayout>
+    </Grid>
+</ContentView>

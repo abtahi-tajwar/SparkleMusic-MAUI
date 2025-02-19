@@ -10,28 +10,25 @@
     Shell.FlyoutBehavior="Flyout"
     Title="SparkleMusic_MAUI"
     TabBarUnselectedColor="{StaticResource PrimaryBackground}"
-    NavBarIsVisible="False"
-    >
+    NavBarIsVisible="False">
+    
     <TabBar>
         <ShellContent
             Title="Musics"
             Icon="music_icon.png"
             ContentTemplate="{DataTemplate local:MainPage}"
-            Route="MainPage" 
-            
-            />
+            Route="MainPage" />
         <ShellContent
             Title="Download"
             Icon="download_icon.png"
             ContentTemplate="{DataTemplate download:YoutubeDownloadPage}"
-            Route="DownloadPage"
-            />
+            Route="DownloadPage" />
         <ShellContent
             Title="Albums"
             Icon="album_icon.png"
             ContentTemplate="{DataTemplate album:AlbumPage}"
-            Route="AlbumPage" 
-            />
+            Route="AlbumPage" />
     </TabBar>
+
 
 </Shell>
