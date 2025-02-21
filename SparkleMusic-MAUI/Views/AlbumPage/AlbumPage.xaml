@@ -3,13 +3,20 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:container="clr-namespace:SparkleMusic_MAUI.UIComponent.Container"
+             xmlns:navbar="clr-namespace:SparkleMusic_MAUI.UIComponent.Navbar"
              x:Class="SparkleMusic_MAUI.Views.AlbumPage.AlbumPage"
              Background="{StaticResource BackgroundPrimary}">
 
     <container:PageContainer>
-        <ContentView>
-            <Label Text="Albums Page" TextColor="White"></Label>
-        </ContentView>
+        <container:PageContainer.ChildrenContent>
+            <Label Text="Albums Page" />
+        </container:PageContainer.ChildrenContent>
     </container:PageContainer>
+    <!-- <container:PageContainer /> -->
+    <!-- <container:PageContainer> -->
+    <!--     <container:PageContainer.ChildrenContent> -->
+    <!--         <Label Text="Something" /> -->
+    <!--     </container:PageContainer.ChildrenContent> -->
+    <!-- </container:PageContainer> -->
 
 </ContentPage>

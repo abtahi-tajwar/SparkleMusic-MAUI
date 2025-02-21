@@ -23,6 +23,7 @@ public partial class MainPageViewModel : ObservableObject
     private readonly IAudioService _audioService;
 
     [ObservableProperty] private ObservableCollection<MusicEntity> musics = new();
+    [ObservableProperty] private bool musicInitialized = false;
 
     [ObservableProperty] 
     [NotifyPropertyChangedFor(nameof(showCurrentMusicControls))]
@@ -83,6 +84,10 @@ public partial class MainPageViewModel : ObservableObject
 
     private async void InitializeMusics()
     {
+        if (MusicInitialized)
+        {
+            return;
+        }
         try
         {
             List<MusicEntity> musics = new();
@@ -100,6 +105,7 @@ public partial class MainPageViewModel : ObservableObject
             // Musics = new ObservableCollection<MusicEntity>(musicPlaceholderData.Concat(musicData).ToList());
             Musics = new ObservableCollection<MusicEntity>(musics);
             Debug.WriteLine($"Musics {Musics.Count}");
+            MusicInitialized = true;
         }
         catch (Exception e)
         {

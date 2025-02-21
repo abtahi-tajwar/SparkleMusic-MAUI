@@ -7,6 +7,7 @@ using SparkleMusic_MAUI.Module.Album.Repository;
 using SparkleMusic_MAUI.Module.Music.Repository;
 using SparkleMusic_MAUI.Views.MainPage;
 using SparkleMusic_MAUI.Services;
+using SparkleMusic_MAUI.UIComponent.Container;
 using SparkleMusic_MAUI.Views.AlbumPage;
 
 namespace SparkleMusic_MAUI;
