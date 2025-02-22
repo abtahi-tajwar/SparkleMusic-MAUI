@@ -1,4 +1,5 @@
 #if ANDROID
+using System.Diagnostics;
 using Android.Content;
 using Android.Provider;
 using SparkleMusic_MAUI.Module.Album.Entity;
@@ -101,7 +102,8 @@ public class AudioService_Android : IAudioService
                         Author = cursor.GetString(artistColumn) ?? "Unknown Artist",
                         Duration = durationTimeString,
                         Source = cursor.GetString(dataColumn) ?? "",
-                        Image = Helper.GetRandomThumbnail()
+                        Image = Helper.GetRandomThumbnail(),
+                        Album = cursor.GetString(albumColumn) ?? "Unknown Album",
                     });
                 } while (cursor.MoveToNext());
 
@@ -138,6 +140,7 @@ public class AudioService_Android : IAudioService
         {
             if (cursor != null && cursor.MoveToFirst())
             {
+                Debug.WriteLine($"Cursor Count: {cursor.Count}");
                 int idColumn = cursor.GetColumnIndex(MediaStore.Audio.Albums.InterfaceConsts.Id);
                 int albumColumn = cursor.GetColumnIndex(MediaStore.Audio.Albums.InterfaceConsts.Album);
                 int artistColumn = cursor.GetColumnIndex(MediaStore.Audio.Albums.InterfaceConsts.Artist);

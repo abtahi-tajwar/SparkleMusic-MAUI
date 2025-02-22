@@ -18,4 +18,6 @@ public class MusicEntity
     public string Image { get; set; }
     [JsonPropertyName("source")]
     public string Source { get; set; }
+    [JsonPropertyName("album")]
+    public string? Album { get; set; }
 }
