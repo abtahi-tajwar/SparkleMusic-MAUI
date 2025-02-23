@@ -6,12 +6,12 @@
              xmlns:local="clr-namespace:SparkleMusic_MAUI.UIComponent.Container"
              x:Class="SparkleMusic_MAUI.UIComponent.Container.PageContainer"
              x:DataType="local:PageContainer"
+             Background="{StaticResource BackgroundPrimary}"
              >
-    <VerticalStackLayout>
-        <navbar:Navbar />
+    <Grid RowDefinitions="Auto, *">
+        <navbar:Navbar Grid.Row="0" />
         <!-- Placeholder for child content -->
-        <Label x:Name="TestLabel" Text="This will be replaced" />
-        <ContentView x:Name="DummyContent" Content="{Binding ChildrenContent}"  />
-    </VerticalStackLayout>
+        <ContentView Grid.Row="1" BackgroundColor="Bisque" x:Name="DummyContent" Content="{Binding ChildrenContent}"  />
+    </Grid>
     
 </ContentView>

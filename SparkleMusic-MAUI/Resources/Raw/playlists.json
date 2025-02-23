@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "title": "Chill Vibes",
+    "thumbnail": "t1.png",
+    "createdAt": "2025-02-12T10:00:00",
+    "updatedAt": "2025-02-22T10:00:00"
+  },
+  {
+    "id": 2,
+    "title": "Workout Hits",
+    "thumbnail": "t2.png",
+    "createdAt": "2025-02-13T10:00:00",
+    "updatedAt": "2025-02-22T10:00:00"
+  },
+  {
+    "id": 3,
+    "title": "Top 50 Global",
+    "thumbnail": "t3.png",
+    "createdAt": "2025-02-14T10:00:00",
+    "updatedAt": "2025-02-22T10:00:00"
+  },
+  {
+    "id": 4,
+    "title": "Old School Classics",
+    "thumbnail": "t4.png",
+    "createdAt": "2025-02-15T10:00:00",
+    "updatedAt": "2025-02-22T10:00:00"
+  },
+  {
+    "id": 5,
+    "title": "Party Anthems",
+    "thumbnail": "t5.png",
+    "createdAt": "2025-02-16T10:00:00",
+    "updatedAt": "2025-02-22T10:00:00"
+  },
+  {
+    "id": 6,
+    "title": "Romantic Ballads",
+    "thumbnail": "t6.png",
+    "createdAt": "2025-02-17T10:00:00",
+    "updatedAt": "2025-02-22T10:00:00"
+  },
+  {
+    "id": 7,
+    "title": "Indie Discoveries",
+    "thumbnail": "t7.png",
+    "createdAt": "2025-02-18T10:00:00",
+    "updatedAt": "2025-02-22T10:00:00"
+  },
+  {
+    "id": 8,
+    "title": "Jazz & Blues",
+    "thumbnail": "t8.png",
+    "createdAt": "2025-02-19T10:00:00",
+    "updatedAt": "2025-02-22T10:00:00"
+  },
+  {
+    "id": 9,
+    "title": "Focus & Study",
+    "thumbnail": "t9.png",
+    "createdAt": "2025-02-20T10:00:00",
+    "updatedAt": "2025-02-22T10:00:00"
+  },
+  {
+    "id": 10,
+    "title": "Happy Hits",
+    "thumbnail": "t10.png",
+    "createdAt": "2025-02-21T10:00:00",
+    "updatedAt": "2025-02-22T10:00:00"
+  }
+]

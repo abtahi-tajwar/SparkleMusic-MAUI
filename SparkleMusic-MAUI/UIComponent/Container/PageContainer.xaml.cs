@@ -12,7 +12,7 @@ public partial class PageContainer : ContentView
     public PageContainer()
     {
         InitializeComponent();
-        BindingContext = this;
+        BindingContext = this.Parent?.BindingContext;
         // Initialize();
         // TestLabel.Text = "Replaced content";
     }

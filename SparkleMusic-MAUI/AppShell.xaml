@@ -6,6 +6,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:SparkleMusic_MAUI"
     xmlns:album="clr-namespace:SparkleMusic_MAUI.Views.AlbumPage"
+    xmlns:playlist="clr-namespace:SparkleMusic_MAUI.Views.PlaylistPage"
     xmlns:download="clr-namespace:SparkleMusic_MAUI.Views.YoutubeDownloadPage"
     Shell.FlyoutBehavior="Flyout"
     Title="SparkleMusic_MAUI"
@@ -24,9 +25,9 @@
             ContentTemplate="{DataTemplate download:YoutubeDownloadPage}"
             Route="DownloadPage" />
         <ShellContent
-            Title="Albums"
+            Title="Playlists"
             Icon="album_icon.png"
-            ContentTemplate="{DataTemplate album:AlbumPage}"
+            ContentTemplate="{DataTemplate playlist:PlaylistPage}"
             Route="AlbumPage" />
     </TabBar>
 

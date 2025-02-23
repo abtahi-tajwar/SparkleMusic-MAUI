@@ -5,10 +5,12 @@ using Microsoft.Maui.Controls.Hosting;
 using Microsoft.Maui.Hosting;
 using SparkleMusic_MAUI.Module.Album.Repository;
 using SparkleMusic_MAUI.Module.Music.Repository;
+using SparkleMusic_MAUI.Module.Playlist.Repository;
 using SparkleMusic_MAUI.Views.MainPage;
 using SparkleMusic_MAUI.Services;
 using SparkleMusic_MAUI.UIComponent.Container;
 using SparkleMusic_MAUI.Views.AlbumPage;
+using SparkleMusic_MAUI.Views.PlaylistPage;
 
 namespace SparkleMusic_MAUI;
 
@@ -34,6 +36,11 @@ public static class MauiProgram
         builder.Services.AddTransient<AlbumPage>();
         builder.Services.AddTransient<AlbumPageViewModel>();
         builder.Services.AddSingleton<AlbumRepository>();
+        
+        // Playlist
+        builder.Services.AddTransient<PlaylistPage>();
+        builder.Services.AddTransient<PlaylistPageViewModel>();
+        builder.Services.AddSingleton<PlaylistRepository>();
         
         // Services
         builder.Services.AddSingleton<StorageService>();
