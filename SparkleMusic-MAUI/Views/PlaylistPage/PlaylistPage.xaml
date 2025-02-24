@@ -8,32 +8,41 @@
              x:Class="SparkleMusic_MAUI.Views.PlaylistPage.PlaylistPage"
              x:DataType="local:PlaylistPageViewModel">
     <ContentPage.Content>
-        <container:PageContainer>
-            <container:PageContainer.ChildrenContent>
-                <CollectionView VerticalOptions="Fill" ItemsSource="{Binding Playlists}">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="model:PlaylistEntity">
-                            <Label Text="{Binding Title}" />
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-                <!-- <CollectionView> -->
-                <!--     <CollectionView.ItemsSource> -->
-                <!--         <x:Array Type="{x:Type x:String}"> -->
-                <!--             <x:String>Item 1</x:String> -->
-                <!--             <x:String>Item 2</x:String> -->
-                <!--             <x:String>Item 3</x:String> -->
-                <!--         </x:Array> -->
-                <!--     </CollectionView.ItemsSource> -->
-                <!-- -->
-                <!--     <CollectionView.ItemTemplate> -->
-                <!--         <DataTemplate x:DataType="x:String"> -->
-                <!--             <Label Text="{Binding}" /> -->
-                <!--         </DataTemplate> -->
-                <!--     </CollectionView.ItemTemplate> -->
-                <!-- </CollectionView> -->
+        <!-- <container:PageContainer> -->
+        <!--     <container:PageContainer.ChildrenContent> -->
+        <!--         ~1~ <CollectionView VerticalOptions="Fill"> @1@ -->
+        <!--         ~1~     <CollectionView.ItemsSource> @1@ -->
+        <!--         ~1~         <x:Array Type="{x:Type x:String}"> @1@ -->
+        <!--         ~1~             <x:String>Item 1</x:String> @1@ -->
+        <!--         ~1~             <x:String>Item 2</x:String> @1@ -->
+        <!--         ~1~             <x:String>Item 3</x:String> @1@ -->
+        <!--         ~1~         </x:Array> @1@ -->
+        <!--         ~1~     </CollectionView.ItemsSource> @1@ -->
+        <!--         ~1~ @1@ -->
+        <!--         ~1~     <CollectionView.ItemTemplate> @1@ -->
+        <!--         ~1~         <DataTemplate x:DataType="x:String"> @1@ -->
+        <!--         ~1~             <Label Text="{Binding}" /> @1@ -->
+        <!--         ~1~         </DataTemplate> @1@ -->
+        <!--         ~1~     </CollectionView.ItemTemplate> @1@ -->
+        <!--         ~1~ </CollectionView> @1@ -->
+        <!--         <ContentView> -->
+        <!-- -->
+        <!--         <Label Text="Inside" /> -->
+        <!--         </ContentView> -->
+        <!-- -->
+        <!--     </container:PageContainer.ChildrenContent> -->
+        <!-- </container:PageContainer> -->
+        <!-- <Label Text="Test" /> -->
+        <container:AppPageContainer>
+            <Label Text="Something" />
 
-            </container:PageContainer.ChildrenContent>
-        </container:PageContainer>
+        </container:AppPageContainer>
+        <!-- <CollectionView VerticalOptions="Fill" ItemsSource="{Binding Playlists}"> -->
+        <!--     <CollectionView.ItemTemplate> -->
+        <!--         <DataTemplate x:DataType="model:PlaylistEntity"> -->
+        <!--             <Label Text="{Binding Title}" /> -->
+        <!--         </DataTemplate> -->
+        <!--     </CollectionView.ItemTemplate> -->
+        <!-- </CollectionView> -->
     </ContentPage.Content>
 </ContentPage>

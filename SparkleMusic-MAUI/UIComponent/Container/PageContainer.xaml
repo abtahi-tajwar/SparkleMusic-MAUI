@@ -11,7 +11,7 @@
     <Grid RowDefinitions="Auto, *">
         <navbar:Navbar Grid.Row="0" />
         <!-- Placeholder for child content -->
-        <ContentView Grid.Row="1" BackgroundColor="Bisque" x:Name="DummyContent" Content="{Binding ChildrenContent}"  />
+        <ContentView Grid.Row="1" BackgroundColor="White" x:Name="DummyContent" Content="{Binding ChildrenContent}"  />
     </Grid>
     
 </ContentView>

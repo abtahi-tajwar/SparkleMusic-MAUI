@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView
+    x:Name="RootView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="SparkleMusic_MAUI.UIComponent.Container.AppPageContainer"
+    xmlns:navbar="clr-namespace:SparkleMusic_MAUI.UIComponent.Navbar"
+    Background="{StaticResource BackgroundPrimary}">
+    <VerticalStackLayout>
+        <navbar:Navbar />
+        <ContentPresenter x:Name="ChildContent" Content="{Binding BodyContent, Source={x:Reference RootView }}" />
+    </VerticalStackLayout>
+</ContentView>
