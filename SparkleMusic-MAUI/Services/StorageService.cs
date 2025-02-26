@@ -17,7 +17,7 @@ public class StorageService
                         DevicePlatform.WinUI, [".mp3", ".wav", ".aac", ".flac", ".m4a", ".ogg"]
                     }, // Common audio file extensions
                     { DevicePlatform.Tizen, ["audio/*"] }, // Allow all audio types
-                    // { DevicePlatform.macOS, ["*"] } // UTType for macOS
+                    { DevicePlatform.macOS, ["public.audio"] } // UTType for macOS
                 });
 
             PickOptions options = new()

@@ -25,5 +25,16 @@
 	</array>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
+	<key>APFiles</key>
+	<dict>
+		<key>APFileDescriptionKey</key>
+		<string></string>
+		<key>APFileDestinationPath</key>
+		<string></string>
+		<key>APFileName</key>
+		<string></string>
+		<key>APFileSourcePath</key>
+		<string></string>
+	</dict>
 </dict>
 </plist>

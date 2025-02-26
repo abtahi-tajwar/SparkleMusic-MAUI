@@ -16,7 +16,7 @@ public class PlaylistRepository
     {
         List<PlaylistEntity>? playlist = new();
         await Task.Delay(500);
-        await using var stream = await FileSystem.OpenAppPackageFileAsync("musics.json");
+        await using var stream = await FileSystem.OpenAppPackageFileAsync("playlists.json");
         using var reader = new StreamReader(stream);
         string json = await reader.ReadToEndAsync();
         playlist = JsonSerializer.Deserialize<List<PlaylistEntity>>(json);

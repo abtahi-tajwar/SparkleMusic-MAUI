@@ -121,12 +121,12 @@ public partial class MainPageViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async void OnPlusButtonClick()
+    private async Task OnPlusButtonClick()
     {
         IEnumerable<FileResult>? files = null;
         files = await _storageService.PickFilesAsync(null);
         var importedMusics = new List<MusicEntity>();
-
+        if (files == null) return;
         string[] thumbnails = ["music_thumb1.png", "music_thumb2.png", "music_thumb3.png", "music_thumb4.png"];
         Random random = new Random();
         foreach (var file in files)

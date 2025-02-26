@@ -6,14 +6,15 @@
              xmlns:local="clr-namespace:SparkleMusic_MAUI.Views.PlaylistPage"
              xmlns:model="clr-namespace:SparkleMusic_MAUI.Module.Playlist.Entity"
              xmlns:navbar="clr-namespace:SparkleMusic_MAUI.UIComponent.Navbar"
+             xmlns:button="clr-namespace:SparkleMusic_MAUI.UIComponent.Button"
              x:Class="SparkleMusic_MAUI.Views.PlaylistPage.PlaylistPage"
              x:DataType="local:PlaylistPageViewModel"
              Background="{StaticResource BackgroundPrimary}">
     <ContentPage.Content>
-        <Grid RowDefinitions="Auto, *">
+        <Grid RowDefinitions="Auto, Auto, *">
             <navbar:Navbar Grid.Row="0" />
-
-            <CollectionView Grid.Row="1" IsVisible="{Binding   !InitLoading}" VerticalOptions="Fill" ItemsLayout="VerticalGrid, 2"
+            <button:IconButton x:Name="OpenAddPopupButton" Icon="plus_white_icon.png" />
+            <CollectionView Grid.Row="2" IsVisible="{Binding   !InitLoading}" VerticalOptions="Fill" ItemsLayout="VerticalGrid, 2"
                             ItemsSource="{Binding Playlists}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:PlaylistEntity">
@@ -25,7 +26,7 @@
                                 RowDefinitions="*, 50"
                                 HeightRequest="150"
                                 BackgroundColor="{StaticResource Accent}">
-                                <Image Grid.RowSpan="2" Aspect="AspectFill" Source="t3.png" />
+                                <Image Grid.RowSpan="2" Aspect="AspectFill" Source="{Binding Thumbnail}" />
                                 <Grid Grid.Row="1" Padding="5" BackgroundColor="{StaticResource Accent}">
                                     <Label Text="{Binding Title}" />
                                 </Grid>
