@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Maui.Views;
+using SparkleMusic_MAUI.Module.Playlist.Service;
 using SparkleMusic_MAUI.UIComponent.Popup;
 
 namespace SparkleMusic_MAUI.Views.PlaylistPage;
@@ -11,12 +12,16 @@ namespace SparkleMusic_MAUI.Views.PlaylistPage;
 public partial class PlaylistPage : ContentPage
 {
     private readonly PlaylistPageViewModel _viewModel;
-    public PlaylistPage(PlaylistPageViewModel viewModel)
+    private readonly PlaylistService _playlistService;
+    private readonly AddPlaylistPopup _addPlaylistPopup;
+    public PlaylistPage(PlaylistPageViewModel viewModel, PlaylistService playlistService, AddPlaylistPopup addPlaylistPopup)
     {
         InitializeComponent();
         BindingContext = viewModel;
         _viewModel = viewModel;
         _viewModel.Initalize();
+        _playlistService = playlistService;
+        _addPlaylistPopup = addPlaylistPopup;
 
 
         OpenAddPopupButton.Command = new Command(OpenAddPopupButton_Clicked);
@@ -24,7 +29,7 @@ public partial class PlaylistPage : ContentPage
 
     private void OpenAddPopupButton_Clicked()
     {
-        var popup = new AddPlaylistPopup();
+        var popup = _addPlaylistPopup.PlaylistPopup;
         this.ShowPopup(popup);
     }
 }

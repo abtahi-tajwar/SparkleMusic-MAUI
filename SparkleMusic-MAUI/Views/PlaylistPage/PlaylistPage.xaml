@@ -13,7 +13,7 @@
     <ContentPage.Content>
         <Grid RowDefinitions="Auto, Auto, *">
             <navbar:Navbar Grid.Row="0" />
-            <button:IconButton x:Name="OpenAddPopupButton" Icon="plus_white_icon.png" />
+            <button:IconButton Grid.Row="1" WidthRequest="15" HeightRequest="15" Margin="20, 0" HorizontalOptions="End" x:Name="OpenAddPopupButton" Icon="plus_white_icon.png" />
             <CollectionView Grid.Row="2" IsVisible="{Binding   !InitLoading}" VerticalOptions="Fill" ItemsLayout="VerticalGrid, 2"
                             ItemsSource="{Binding Playlists}">
                 <CollectionView.ItemTemplate>
