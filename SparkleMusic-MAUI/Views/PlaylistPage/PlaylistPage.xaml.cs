@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Maui.Views;
 using SparkleMusic_MAUI.Module.Playlist.Service;
-using SparkleMusic_MAUI.UIComponent.Popup;
 
 namespace SparkleMusic_MAUI.Views.PlaylistPage;
 
@@ -29,7 +28,7 @@ public partial class PlaylistPage : ContentPage
 
     private void OpenAddPopupButton_Clicked()
     {
-        var popup = _addPlaylistPopup.PlaylistPopup;
-        this.ShowPopup(popup);
+        // var popup = _addPlaylistPopup.PlaylistPopup;
+        this.ShowPopup(_addPlaylistPopup);
     }
 }

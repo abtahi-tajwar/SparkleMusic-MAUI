@@ -10,7 +10,6 @@ using SparkleMusic_MAUI.Module.Playlist.Service;
 using SparkleMusic_MAUI.Views.MainPage;
 using SparkleMusic_MAUI.Services;
 using SparkleMusic_MAUI.UIComponent.Container;
-using SparkleMusic_MAUI.UIComponent.Popup;
 using SparkleMusic_MAUI.Views.AlbumPage;
 using SparkleMusic_MAUI.Views.PlaylistPage;
 
@@ -45,7 +44,9 @@ public static class MauiProgram
         builder.Services.AddTransient<PlaylistPageViewModel>();
         builder.Services.AddSingleton<PlaylistRepository>();
         builder.Services.AddSingleton<PlaylistService>();
-        builder.Services.AddTransient<AddPlaylistPopup>();
+        builder.Services.AddTransient<AddPlaylistPopup, AddPlaylistPopupViewModel>();
+        builder.Services.AddTransient<AddPlaylistPopupViewModel>();
+        
         // Services
         builder.Services.AddSingleton<StorageService>();
         builder.Services.AddSingleton<DatabaseService>();

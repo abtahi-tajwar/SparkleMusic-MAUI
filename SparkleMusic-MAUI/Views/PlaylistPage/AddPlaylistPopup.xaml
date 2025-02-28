@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               xmlns:component="clr-namespace:SparkleMusic_MAUI.UIComponent"
+               xmlns:local="clr-namespace:SparkleMusic_MAUI.Views.PlaylistPage"
+               x:Class="SparkleMusic_MAUI.Views.PlaylistPage.AddPlaylistPopup"
+               x:DataType="local:AddPlaylistPopupViewModel">
+
+
+    <VerticalStackLayout Spacing="15" Padding="30" BackgroundColor="Black">
+        <Label Text="Enter The Name of your playlist" TextColor="White" FontSize="22" HorizontalOptions="Center" />
+        <Entry
+            x:Name="NewPlaylistNameInput"
+
+            Placeholder="Write here..." TextColor="White" />
+        <component:ShowIf Condition="{Binding IsSubmitLoading}">
+            <component:ShowIf.False>
+                <ActivityIndicator Color="White" IsRunning="True" />
+            </component:ShowIf.False>
+            <component:ShowIf.True>
+                <Button
+                    x:Name="AddPlaylistSubmitBtn"
+                    HeightRequest="30"
+                    HorizontalOptions="End"
+                    ImageSource="plus_white_icon.png"
+                    Text="Create" />
+            </component:ShowIf.True>
+        </component:ShowIf>
+    </VerticalStackLayout>
+</toolkit:Popup>

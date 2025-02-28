@@ -68,4 +68,17 @@
         <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
     </ItemGroup>
 
+    <ItemGroup>
+      <MauiXaml Update="Views\PlaylistPage\AddPlaylistPopup.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Views\PlaylistPage\AddPlaylistPopup.xaml.cs">
+        <DependentUpon>AddPlaylistPopup.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+    </ItemGroup>
+
 </Project>

@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Windows.Input;
 using CommunityToolkit.Maui.Core.Primitives;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Maui.Controls;
 using SparkleMusic_MAUI.Services;
 using SparkleMusic_MAUI.Views.MainPage;
