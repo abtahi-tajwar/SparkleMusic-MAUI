@@ -11,16 +11,14 @@ namespace SparkleMusic_MAUI.Views.PlaylistPage;
 public partial class PlaylistPage : ContentPage
 {
     private readonly PlaylistPageViewModel _viewModel;
-    private readonly PlaylistService _playlistService;
-    private readonly AddPlaylistPopup _addPlaylistPopup;
-    public PlaylistPage(PlaylistPageViewModel viewModel, PlaylistService playlistService, AddPlaylistPopup addPlaylistPopup)
+    private readonly IServiceProvider _serviceProvider;
+    public PlaylistPage(PlaylistPageViewModel viewModel, PlaylistService playlistService, AddPlaylistPopup addPlaylistPopup, AddPlaylistPopupViewModel _popupViewModel, IServiceProvider serviceProvider)
     {
         InitializeComponent();
         BindingContext = viewModel;
         _viewModel = viewModel;
         _viewModel.Initalize();
-        _playlistService = playlistService;
-        _addPlaylistPopup = addPlaylistPopup;
+        _serviceProvider = serviceProvider;
 
 
         OpenAddPopupButton.Command = new Command(OpenAddPopupButton_Clicked);
@@ -28,7 +26,11 @@ public partial class PlaylistPage : ContentPage
 
     private void OpenAddPopupButton_Clicked()
     {
-        // var popup = _addPlaylistPopup.PlaylistPopup;
-        this.ShowPopup(_addPlaylistPopup);
+        // var popup = _addPlaylistPopup.PlaylistPopup
+        // _addPlaylistPopup.Close();
+        var viewModel = _serviceProvider.GetRequiredService<AddPlaylistPopupViewModel>();
+        var service = _serviceProvider.GetRequiredService<PlaylistService>();
+        var popup = new AddPlaylistPopup(viewModel, service);
+        this.ShowPopup(popup);
     }
 }

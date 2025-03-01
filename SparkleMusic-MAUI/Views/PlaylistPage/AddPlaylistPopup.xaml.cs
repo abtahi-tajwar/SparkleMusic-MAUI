@@ -24,8 +24,3 @@ partial class AddPlaylistPopup : CommunityToolkit.Maui.Views.Popup
         });
     }
 }
-
-// public class AddPlaylistPopup(AddPlaylistPopupViewModel viewModel, PlaylistService service)
-// {
-//     public readonly AddPlaylistPopupUnwrapped PlaylistPopup = new(viewModel, service);
-// }

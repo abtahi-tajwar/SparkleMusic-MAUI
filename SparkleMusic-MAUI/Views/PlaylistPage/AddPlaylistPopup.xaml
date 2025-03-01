@@ -13,20 +13,21 @@
         <Label Text="Enter The Name of your playlist" TextColor="White" FontSize="22" HorizontalOptions="Center" />
         <Entry
             x:Name="NewPlaylistNameInput"
-
+            
             Placeholder="Write here..." TextColor="White" />
+        
         <component:ShowIf Condition="{Binding IsSubmitLoading}">
-            <component:ShowIf.False>
-                <ActivityIndicator Color="White" IsRunning="True" />
-            </component:ShowIf.False>
             <component:ShowIf.True>
+                <ActivityIndicator Color="White" IsRunning="True" />
+            </component:ShowIf.True>
+            <component:ShowIf.False>
                 <Button
                     x:Name="AddPlaylistSubmitBtn"
                     HeightRequest="30"
                     HorizontalOptions="End"
                     ImageSource="plus_white_icon.png"
                     Text="Create" />
-            </component:ShowIf.True>
+            </component:ShowIf.False>
         </component:ShowIf>
     </VerticalStackLayout>
 </toolkit:Popup>

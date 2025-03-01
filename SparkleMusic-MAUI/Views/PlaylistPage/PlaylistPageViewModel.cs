@@ -31,6 +31,7 @@ public partial class PlaylistPageViewModel : ObservableObject
         _ = FetchPlaylists();
     }
 
+    #region BusinessLogics
     public async Task FetchPlaylists()
     {
         if (!AlreadyInitialized)
@@ -43,6 +44,7 @@ public partial class PlaylistPageViewModel : ObservableObject
             InitLoading = false;
         }
     }
+    #endregion
     
     
 }

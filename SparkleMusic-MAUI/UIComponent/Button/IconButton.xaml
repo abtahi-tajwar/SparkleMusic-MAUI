@@ -5,15 +5,16 @@
              xmlns:local="clr-namespace:SparkleMusic_MAUI.UIComponent.Button"
              x:Class="SparkleMusic_MAUI.UIComponent.Button.IconButton"
              x:DataType="local:IconButton">
-    <Button
+    <ImageButton
         HeightRequest="21"
         WidthRequest="21"
-        Padding="0"
+        Padding="10"
         CornerRadius="21"
-        ImageSource="{Binding Icon}"
+        Source="{Binding Icon}"
         Command="{Binding Command}"
         CommandParameter="{Binding CommandParameter}"
         >
+
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroupList>
                 <VisualStateGroup Name="ButtonState">
@@ -30,5 +31,5 @@
                 </VisualStateGroup>
             </VisualStateGroupList>
         </VisualStateManager.VisualStateGroups>
-    </Button>
+    </ImageButton>
 </ContentView>
