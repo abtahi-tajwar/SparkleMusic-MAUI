@@ -7,8 +7,10 @@
     x:Class="SparkleMusic_MAUI.UIComponent.Container.AppPageContainer"
     xmlns:navbar="clr-namespace:SparkleMusic_MAUI.UIComponent.Navbar"
     Background="{StaticResource BackgroundPrimary}">
-    <VerticalStackLayout>
-        <navbar:Navbar />
-        <ContentPresenter x:Name="ChildContent" Content="{Binding BodyContent, Source={x:Reference RootView }}" />
-    </VerticalStackLayout>
+    <Grid RowDefinitions="Auto, *">
+        <navbar:Navbar Grid.Row="0" />
+        <Grid Grid.Row="1" x:Name="BodyContentContainer">
+            
+        </Grid>
+    </Grid>
 </ContentView>

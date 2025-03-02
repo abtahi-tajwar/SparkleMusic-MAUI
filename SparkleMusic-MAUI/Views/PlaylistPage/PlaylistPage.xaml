@@ -7,43 +7,146 @@
              xmlns:model="clr-namespace:SparkleMusic_MAUI.Module.Playlist.Entity"
              xmlns:navbar="clr-namespace:SparkleMusic_MAUI.UIComponent.Navbar"
              xmlns:button="clr-namespace:SparkleMusic_MAUI.UIComponent.Button"
+             xmlns:component="clr-namespace:SparkleMusic_MAUI.UIComponent"
              x:Class="SparkleMusic_MAUI.Views.PlaylistPage.PlaylistPage"
              x:DataType="local:PlaylistPageViewModel"
              Background="{StaticResource BackgroundPrimary}">
     <ContentPage.Content>
-        <Grid RowDefinitions="Auto, Auto, *">
-            <navbar:Navbar Grid.Row="0" />
-            <button:IconButton Grid.Row="1" WidthRequest="15" HeightRequest="15" Margin="20, 0" HorizontalOptions="End" x:Name="OpenAddPopupButton" Icon="plus_white_icon.png" />
-            <CollectionView Grid.Row="2" IsVisible="{Binding   !InitLoading}" VerticalOptions="Fill" ItemsLayout="VerticalGrid, 2"
-                            ItemsSource="{Binding Playlists}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:PlaylistEntity">
-                        <Border
-                            Stroke="Transparent"
-                            Margin="10"
-                            StrokeShape="RoundRectangle 10">
-                            <Grid
-                                RowDefinitions="*, 50"
-                                HeightRequest="150"
-                                BackgroundColor="{StaticResource Accent}">
-                                <Image Grid.RowSpan="2" Aspect="AspectFill" Source="{Binding Thumbnail}" />
-                                <Grid Grid.Row="1" Padding="5" BackgroundColor="{StaticResource Accent}">
-                                    <Label Text="{Binding Title}" />
+        <!-- <Grid RowDefinitions="Auto, *"> -->
+        <!--     <navbar:Navbar Grid.Row="0" /> -->
+        <!-- -->
+        <!--     <Grid Grid.Row="1" RowDefinitions="Auto, *"> -->
+        <!--         <Grid.Triggers> -->
+        <!--             <DataTrigger TargetType="Grid" Binding="{Binding InitLoading}" Value="False"> -->
+        <!--                 <Setter Property="IsVisible" Value="True"></Setter> -->
+        <!--             </DataTrigger><DataTrigger TargetType="Grid" Binding="{Binding InitLoading}" Value="True"> -->
+        <!--                 <Setter Property="IsVisible" Value="False"></Setter> -->
+        <!--             </DataTrigger> -->
+        <!--         </Grid.Triggers> -->
+        <!--         <HorizontalStackLayout Grid.Row="0" HorizontalOptions="End" Margin="10, 0"> -->
+        <!--             <button:IconButton -->
+        <!--                 WidthRequest="15" -->
+        <!--                 HeightRequest="15" -->
+        <!--                 Margin="20, 0" -->
+        <!--                 HorizontalOptions="End" -->
+        <!--                 x:Name="OpenAddPopupButton" -->
+        <!--                 Icon="plus_white_icon.png" /> -->
+        <!--             <Button -->
+        <!--                 ImageSource="refresh_icon.png" -->
+        <!--                 HeightRequest="10" -->
+        <!--                 MinimumWidthRequest="120" -->
+        <!--                 ContentLayout="Left, 15" -->
+        <!--                 Text="Refresh" -->
+        <!--                 Command="{Binding RefreshButtonClickedCommand}" -->
+        <!--                 Background="{StaticResource Accent}" /> -->
+        <!-- -->
+        <!--         </HorizontalStackLayout> -->
+        <!--         <CollectionView -->
+        <!--             Grid.Row="1" -->
+        <!--             IsVisible="{Binding   !InitLoading}" -->
+        <!--             VerticalOptions="Fill" -->
+        <!--             ItemsLayout="VerticalGrid, 2" -->
+        <!--             ItemsSource="{Binding Playlists}" -->
+        <!--             Margin="15"> -->
+        <!--             <CollectionView.ItemTemplate> -->
+        <!--                 <DataTemplate x:DataType="model:PlaylistEntity"> -->
+        <!--                     <Border -->
+        <!--                         Stroke="Transparent" -->
+        <!--                         Margin="20, 2" -->
+        <!--                         StrokeShape="RoundRectangle 10"> -->
+        <!--                         <Grid -->
+        <!--                             RowDefinitions="*, 50" -->
+        <!--                             HeightRequest="150" -->
+        <!--                             BackgroundColor="{StaticResource Accent}"> -->
+        <!--                             <Image Grid.RowSpan="2" Aspect="AspectFill" -->
+        <!--                                    Source="{Binding Thumbnail}" /> -->
+        <!--                             <Grid Grid.Row="1" Padding="15" -->
+        <!--                                   BackgroundColor="{StaticResource Accent}"> -->
+        <!--                                 <Label Text="{Binding Title}" TextColor="White" /> -->
+        <!--                             </Grid> -->
+        <!--                         </Grid> -->
+        <!--                     </Border> -->
+        <!--                 </DataTemplate> -->
+        <!--             </CollectionView.ItemTemplate> -->
+        <!--         </CollectionView> -->
+        <!--     </Grid> -->
+        <!--     <ActivityIndicator -->
+        <!--         Grid.Row="1" -->
+        <!--         IsVisible="{Binding InitLoading}" -->
+        <!--         HeightRequest="150" -->
+        <!--         WidthRequest="150" -->
+        <!--         IsRunning="True" -->
+        <!--         Color="White" /> -->
+        <!-- -->
+        <!-- </Grid> -->
+        
+        <container:AppPageContainer>
+            <container:AppPageContainer.BodyContent>
+                <Grid>
+                    <Grid Grid.Row="1" RowDefinitions="Auto, *">
+                <Grid.Triggers>
+                    <DataTrigger TargetType="Grid" Binding="{Binding InitLoading}" Value="False">
+                        <Setter Property="IsVisible" Value="True"></Setter>
+                    </DataTrigger><DataTrigger TargetType="Grid" Binding="{Binding InitLoading}" Value="True">
+                        <Setter Property="IsVisible" Value="False"></Setter>
+                    </DataTrigger>
+                </Grid.Triggers>
+                <HorizontalStackLayout Grid.Row="0" HorizontalOptions="End" Margin="10, 0">
+                    <button:IconButton
+                        WidthRequest="15"
+                        HeightRequest="15"
+                        Margin="20, 0"
+                        HorizontalOptions="End"
+                        x:Name="OpenAddPopupButton"
+                        Icon="plus_white_icon.png" />
+                    <Button
+                        ImageSource="refresh_icon.png"
+                        MaximumHeightRequest="40"
+                        MinimumWidthRequest="120"
+                        ContentLayout="Left, 15"
+                        Text="Refresh"
+                        Command="{Binding RefreshButtonClickedCommand}"
+                        Background="{StaticResource Accent}" />
+
+                </HorizontalStackLayout>
+                <CollectionView
+                    Grid.Row="1"
+                    IsVisible="{Binding   !InitLoading}"
+                    VerticalOptions="Fill"
+                    ItemsLayout="VerticalGrid, 2"
+                    ItemsSource="{Binding Playlists}"
+                    Margin="15">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:PlaylistEntity">
+                            <Border
+                                Stroke="Transparent"
+                                Margin="20, 2"
+                                StrokeShape="RoundRectangle 10">
+                                <Grid
+                                    RowDefinitions="*, 50"
+                                    HeightRequest="150"
+                                    BackgroundColor="{StaticResource Accent}">
+                                    <Image Grid.RowSpan="2" Aspect="AspectFill"
+                                           Source="{Binding Thumbnail}" />
+                                    <Grid Grid.Row="1" Padding="15"
+                                          BackgroundColor="{StaticResource Accent}">
+                                        <Label Text="{Binding Title}" TextColor="White" />
+                                    </Grid>
                                 </Grid>
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-            <!-- <Grid BackgroundColor="Red" Grid.Row="1"> -->
-            <!--     <ActivityIndicator -->
-            <!--         IsVisible="{Binding !InitLoading}" -->
-            <!--         VerticalOptions="Center" -->
-            <!--         HorizontalOptions="Center" -->
-            <!--         Color="White" -->
-            <!--         HeightRequest="50" -->
-            <!--         WidthRequest="50" /> -->
-            <!-- </Grid> -->
-        </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+            <ActivityIndicator
+                Grid.Row="1"
+                IsVisible="{Binding InitLoading}"
+                HeightRequest="150"
+                WidthRequest="150"
+                IsRunning="True"
+                Color="White" />
+                </Grid>
+            </container:AppPageContainer.BodyContent>
+        </container:AppPageContainer>
     </ContentPage.Content>
 </ContentPage>

@@ -45,7 +45,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<PlaylistRepository>();
         builder.Services.AddSingleton<PlaylistService>();
         builder.Services.AddTransient<AddPlaylistPopup, AddPlaylistPopupViewModel>();
-        builder.Services.AddTransient<AddPlaylistPopupViewModel>();
+        builder.Services.AddSingleton<AddPlaylistPopupContext>();
         
         // Services
         builder.Services.AddSingleton<StorageService>();

@@ -3,9 +3,13 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SparkleMusic_MAUI.Views.YoutubeDownloadPage.YoutubeDownloadPage"
-             Background="{StaticResource BackgroundPrimary}"
-             >
+             xmlns:container="clr-namespace:SparkleMusic_MAUI.UIComponent.Container"
+             Background="{StaticResource BackgroundPrimary}">
     <ContentPage.Content>
-        <Label Text="Youtube download page" TextColor="White"></Label>
+        <container:AppPageContainer>
+            <container:AppPageContainer.BodyContent>
+                <Label Text="Youtube Download Page" />
+            </container:AppPageContainer.BodyContent>
+        </container:AppPageContainer>
     </ContentPage.Content>
 </ContentPage>

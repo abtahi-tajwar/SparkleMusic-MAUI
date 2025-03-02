@@ -24,3 +24,16 @@ partial class AddPlaylistPopup : CommunityToolkit.Maui.Views.Popup
         });
     }
 }
+
+public class AddPlaylistPopupContext(
+    AddPlaylistPopupViewModel addPlaylistPopupViewModel,
+    PlaylistService playlistService)
+{
+    private readonly AddPlaylistPopupViewModel _addPlaylistPopupViewModel = addPlaylistPopupViewModel;
+    private readonly PlaylistService _playlistService = playlistService;
+
+    public AddPlaylistPopup Instantiate()
+    {
+        return new AddPlaylistPopup(addPlaylistPopupViewModel, _playlistService);
+    }
+}

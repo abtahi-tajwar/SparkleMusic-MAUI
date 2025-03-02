@@ -11,13 +11,17 @@ namespace SparkleMusic_MAUI.Views.PlaylistPage;
 public partial class PlaylistPageViewModel : ObservableObject
 {
     #region PrivateMembers
+
     private PlaylistRepository _playlistRepository;
+
     #endregion
 
     #region Observables
+
     [ObservableProperty] private ObservableCollection<PlaylistEntity> playlists = new();
     [ObservableProperty] private bool initLoading = false;
     [ObservableProperty] private bool alreadyInitialized = false;
+
     #endregion
 
     public PlaylistPageViewModel(PlaylistRepository playlistRepository)
@@ -28,23 +32,35 @@ public partial class PlaylistPageViewModel : ObservableObject
 
     public void Initalize()
     {
-        _ = FetchPlaylists();
+        InitializePlaylists();
     }
 
     #region BusinessLogics
-    public async Task FetchPlaylists()
+
+    public void InitializePlaylists()
     {
         if (!AlreadyInitialized)
         {
-            InitLoading = true;
-            // var data = await _playlistRepository.GetDummyListAsync();
-            var data = await _playlistRepository.GetListAsync();
-            Playlists = new ObservableCollection<PlaylistEntity>(data);
-            AlreadyInitialized = true;
-            InitLoading = false;
+            _ = FetchPlaylists();
         }
     }
+
+    public async Task FetchPlaylists()
+    {
+        InitLoading = true;
+        // var data = await _playlistRepository.GetDummyListAsync();
+        await Task.Delay(600);
+        var data = await _playlistRepository.GetListAsync();
+        Playlists = new ObservableCollection<PlaylistEntity>(data);
+        AlreadyInitialized = true;
+        InitLoading = false;
+    }
+
+    [RelayCommand]
+    private void OnRefreshButtonClicked()
+    {
+        _ = FetchPlaylists();
+    }
+
     #endregion
-    
-    
 }

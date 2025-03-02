@@ -6,26 +6,40 @@ using System.Threading.Tasks;
 
 namespace SparkleMusic_MAUI.UIComponent.Container;
 
-[ContentProperty(nameof(BodyContent))]
 public partial class AppPageContainer : ContentView
 {
     public AppPageContainer()
     {
         InitializeComponent();
+        // Populate children
     }
     
-    public static readonly BindableProperty BodyContentProperty = BindableProperty.Create(
-        nameof(BodyContent),
-        typeof(View),
-        typeof(AppPageContainer),
-        propertyChanged: (bindable, oldValue, newValue) =>
-        {
-            // Optionally, handle changes here if needed
-        });
+    private static readonly BindableProperty BodyContentProperty = BindableProperty.Create(
+        nameof(BodyContent), 
+        typeof(View), 
+        typeof(AppPageContainer), 
+        null,
+        propertyChanged: OnBodyContentPropertyChanged
+        );
 
     public View BodyContent
     {
-        get => (View)GetValue(BodyContentProperty);
+        get => (View)GetValue(BodyContentProperty); 
         set => SetValue(BodyContentProperty, value);
+    }
+
+    private static void OnBodyContentPropertyChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        var container = (AppPageContainer)bindable;
+        container.UpdateGridContent();
+
+    }
+    private void UpdateGridContent()
+    {
+        BodyContentContainer.Children.Clear(); // Clear existing content
+        if (BodyContent != null)
+        {
+            BodyContentContainer.Children.Add(BodyContent);
+        }
     }
 }
