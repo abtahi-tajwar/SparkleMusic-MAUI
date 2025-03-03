@@ -25,6 +25,7 @@ public class DatabaseService
         await DatabaseConnection.CreateTableAsync<MusicEntity>();
         await DatabaseConnection.CreateTableAsync<AlbumEntity>();
         await DatabaseConnection.CreateTableAsync<PlaylistEntity>();
+        await DatabaseConnection.CreateTableAsync<PlaylistMusicEntity>();
     }
     
 }

@@ -17,3 +17,16 @@ public class PlaylistEntity
     [JsonPropertyName("updatedAt")]
     public DateTime UpdatedAt { get; set; } = DateTime.Now;
 }
+
+public class PlaylistMusicEntity
+{
+    [JsonPropertyName("id")]
+    [PrimaryKey, AutoIncrement]
+    public int Id { get; set; }
+    
+    [JsonPropertyName("playlistId")]
+    public int PlaylistId { get; set; }
+    
+    [JsonPropertyName("musicId")]
+    public int MusicId { get; set; }
+}

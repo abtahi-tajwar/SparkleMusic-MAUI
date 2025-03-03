@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Text.Json;
+using SparkleMusic_MAUI.Module.Music.Entity;
 using SparkleMusic_MAUI.Module.Playlist.Entity;
 using SparkleMusic_MAUI.Services;
 using SQLite;
@@ -36,5 +37,29 @@ public class PlaylistRepository
     {
         await _dbConnection.InsertAsync(playlist);
         Debug.WriteLine("New Playlist Added");
+    }
+
+    public async Task AddMusicToPlaylistAsync(int playlistId, int musicId)
+    {
+        var existingMusic = await _dbConnection.Table<PlaylistMusicEntity>().Where(item => item.MusicId == musicId).FirstOrDefaultAsync();
+        if (existingMusic != null)
+        {
+            await _dbConnection.InsertAsync(new PlaylistMusicEntity()
+            {
+                MusicId = musicId,
+                PlaylistId = playlistId
+            });
+        }
+        
+    }
+
+    public async Task<List<MusicEntity>> PlaylistMusicsAsync(int playlistId)
+    {
+        List<MusicEntity> musics = new();
+        var playlistMusicRelations = await _dbConnection.Table<PlaylistMusicEntity>().Where(item => item.PlaylistId == playlistId).ToListAsync();
+        if (playlistMusicRelations == null) return musics;
+        var playlistMusics = playlistMusicRelations.Select(pm => pm.MusicId);
+        musics = await _dbConnection.Table<MusicEntity>().Where(m => playlistMusics.Contains(m.Id)).ToListAsync();
+        return musics;
     }
 }
