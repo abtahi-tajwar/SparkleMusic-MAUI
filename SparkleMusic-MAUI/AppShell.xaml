@@ -30,6 +30,10 @@
             ContentTemplate="{DataTemplate playlist:PlaylistPage}"
             Route="AlbumPage" />
     </TabBar>
-
+    <ShellContent 
+        Title="Playlist"
+        ContentTemplate="{DataTemplate playlist:SinglePlaylistPage}"
+        Route="SinglePlaylistPage"
+    />
 
 </Shell>
