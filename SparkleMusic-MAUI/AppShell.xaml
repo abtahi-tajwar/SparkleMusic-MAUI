@@ -12,7 +12,7 @@
     Title="SparkleMusic_MAUI"
     TabBarUnselectedColor="{StaticResource PrimaryBackground}"
     NavBarIsVisible="False">
-    
+
     <TabBar>
         <ShellContent
             Title="Musics"
@@ -28,12 +28,13 @@
             Title="Playlists"
             Icon="album_icon.png"
             ContentTemplate="{DataTemplate playlist:PlaylistPage}"
-            Route="AlbumPage" />
+            Route="PlaylistPage" />
     </TabBar>
-    <ShellContent 
-        Title="Playlist"
-        ContentTemplate="{DataTemplate playlist:SinglePlaylistPage}"
-        Route="SinglePlaylistPage"
-    />
+    <ShellItem Route="SinglePlaylistPage">
+        <ShellContent
+            Title="Playlist"
+            ContentTemplate="{DataTemplate playlist:SinglePlaylistPage}"
+            Route="SinglePlaylistPage" />
+    </ShellItem>
 
 </Shell>

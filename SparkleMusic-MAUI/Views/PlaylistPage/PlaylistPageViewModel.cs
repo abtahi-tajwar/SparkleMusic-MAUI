@@ -56,11 +56,21 @@ public partial class PlaylistPageViewModel : ObservableObject
         InitLoading = false;
     }
 
+    #endregion
+
+
+    #region Commands
     [RelayCommand]
     private void OnRefreshButtonClicked()
     {
         _ = FetchPlaylists();
     }
 
+    [RelayCommand]
+    private void OnPlaylistListItemClicked(PlaylistEntity? playlist)
+    {
+        if (playlist == null) return;
+        Shell.Current.GoToAsync($"SinglePlaylistPage?Id={playlist.Id}");
+    }
     #endregion
 }
