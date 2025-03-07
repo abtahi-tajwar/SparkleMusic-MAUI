@@ -17,7 +17,7 @@
                         <CollectionView.EmptyView>
                             <StackLayout Spacing="10" Margin="0, 100" Padding="20" HorizontalOptions="Center"
                                          VerticalOptions="Center">
-                                <Image Source="empty_list.png" HeightRequest="100" />
+                                <Image Source="empty_list.png" HeightRequest="60" />
                                 <Label HorizontalTextAlignment="Center" Text="No songs found in your playlist!"
                                        FontSize="18" TextColor="Gray" />
                                 <Button HeightRequest="40" MaximumHeightRequest="40" ImageSource="plus_white_icon.png"

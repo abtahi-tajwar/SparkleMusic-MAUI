@@ -4,12 +4,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:partial="clr-namespace:SparkleMusic_MAUI.UIComponent.Button"
              xmlns:component="clr-namespace:SparkleMusic_MAUI.UIComponent"
-             xmlns:vm="clr-namespace:SparkleMusic_MAUI.Views.MainPage"
+             xmlns:local="clr-namespace:SparkleMusic_MAUI.Views.MainPage"
              xmlns:model="clr-namespace:SparkleMusic_MAUI.Module.Music.Entity"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
 
              x:Name="MainPageView"
-             x:DataType="vm:MainPageViewModel"
+             x:DataType="local:MainPageViewModel"
              x:Class="SparkleMusic_MAUI.MainPage"
              Background="{StaticResource BackgroundPrimary}">
     <AbsoluteLayout>
@@ -89,7 +89,7 @@
                             <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto,Auto">
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}, Path=MusicSelectCommand}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:MainPageViewModel}}, Path=MusicSelectCommand}"
                                         CommandParameter="{Binding .}" />
                                 </Grid.GestureRecognizers>
                                 <Image Grid.Column="0" Source="{Binding Image}" HeightRequest="40" WidthRequest="40" />
@@ -118,6 +118,10 @@
             ImageSource="plus_white_icon.png" MaximumHeightRequest="40" MaximumWidthRequest="40"
             Background="{StaticResource Accent}"
             Command="{Binding PlusButtonClickCommand}" />
+        <local:MusicContextMenu 
+            AbsoluteLayout.LayoutBounds="0.5, 0.98, AutoSize, AutoSize"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            />
 
     </AbsoluteLayout>
 
