@@ -34,6 +34,7 @@ public partial class MainPageViewModel : ObservableObject
     [ObservableProperty] private string currentPositionTimeString = "00:00";
     [ObservableProperty] private string totalDurationTimeString = "00:00";
     [ObservableProperty] private MediaElement? customMediaElement;
+    [ObservableProperty] private bool? selectModeOn = false;
 
     [ObservableProperty] private string currentPlayingName = "Default Music";
     [ObservableProperty] private bool isPlaying;
@@ -163,7 +164,11 @@ public partial class MainPageViewModel : ObservableObject
         CustomMediaElement.Pause();
         IsPlaying = false;
     }
-    
+
+    private void TurnOnSelectMode()
+    {
+        SelectModeOn = true;
+    }
 
     [RelayCommand]
     private async Task OnMusicSelect(MusicEntity music)
@@ -176,5 +181,11 @@ public partial class MainPageViewModel : ObservableObject
 
         CurrentPlayingName = music.Title;
         OnPlayMusicRequested?.Invoke();
+    }
+
+    [RelayCommand]
+    private async Task OnMusicLongPress()
+    {
+        TurnOnSelectMode();
     }
 }

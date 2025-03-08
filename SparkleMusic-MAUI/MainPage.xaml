@@ -70,11 +70,13 @@
                     Value="{Binding CurrentPlayingPositionInMilliSeconds}"/>
             </Grid>
             <CollectionView
-                SelectionMode="Single"
+                SelectionMode="Multiple"
                 Grid.Row="2"
                 Margin="22, 0"
                 VerticalOptions="FillAndExpand"
-                ItemsSource="{Binding Musics}">
+                ItemsSource="{Binding Musics}"
+                
+                >
                 <CollectionView.EmptyView>
                     <StackLayout Spacing="10" Margin="0, 100" Padding="20" HorizontalOptions="Center" VerticalOptions="Center">
                         <Image Source="empty_list.png" HeightRequest="100"/>
@@ -85,7 +87,17 @@
                 </CollectionView.EmptyView>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:MusicEntity">
-                        <Grid RowDefinitions="*, Auto">
+                        <Grid RowDefinitions="*, Auto" >
+                            <Grid.Behaviors>
+                                <!-- <toolkit:TouchBehavior  -->
+                                <!--     LongPressCommand="{Binding Source={RelativeSource AncestorType={x:Type local:MainPageViewModel}}, Path=MusicLongPressCommand}"  -->
+                                <!--     LongPressCommandParameter="{Binding .}" -->
+                                <!--     /> -->
+                                <toolkit:TouchBehavior 
+                                    LongPressCommand="{Binding Source={RelativeSource AncestorType={x:Type local:MainPageViewModel}}, Path=MusicLongPressCommand}" 
+                                    LongPressCommandParameter="{Binding .}"
+                                    />
+                            </Grid.Behaviors>
                             <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto,Auto">
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer
@@ -97,7 +109,7 @@
                                     <Label TextColor="White" Text="{Binding Title}" />
                                     <Label FontSize="10" TextColor="White" Text="{Binding Duration}" />
                                 </VerticalStackLayout>
-                                <partial:IconButton Grid.Column="2" Icon="more_icon.png" />
+                                <CheckBox IsVisible="{Binding Source={RelativeSource AncestorType={x:Type local:MainPageViewModel}}, Path=SelectModeOn}" Grid.Column="2" />
                                 <BoxView
                                     Grid.Column="3"
                                     BackgroundColor="{StaticResource Primary}"
