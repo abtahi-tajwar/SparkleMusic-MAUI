@@ -33,7 +33,7 @@
                 Padding="22, 18">
                 <VerticalStackLayout Grid.Column="0" Grid.Row="0">
                     <Label FontSize="20" TextColor="White" Text="{Binding CurrentPlayingName}" />
-                    <Label FontSize="12" TextColor="White" >
+                    <Label FontSize="12" TextColor="White">
                         <Label.Text>
                             <MultiBinding StringFormat="{}{0} / {1}">
                                 <Binding Path="CurrentPositionTimeString" />
@@ -41,7 +41,7 @@
                             </MultiBinding>
                         </Label.Text>
                     </Label>
-                    
+
                 </VerticalStackLayout>
                 <HorizontalStackLayout Grid.Column="1">
                     <partial:IconButton Icon="fast_backward_icon.png"></partial:IconButton>
@@ -67,58 +67,62 @@
                     Grid.ColumnSpan="2"
                     x:Name="CurrentSongSeeker"
                     Maximum="{Binding CurrentPlayingMusicDurationInMilliSeconds}"
-                    Value="{Binding CurrentPlayingPositionInMilliSeconds}"/>
+                    Value="{Binding CurrentPlayingPositionInMilliSeconds}" />
             </Grid>
             <CollectionView
-                SelectionMode="Multiple"
                 Grid.Row="2"
                 Margin="22, 0"
                 VerticalOptions="FillAndExpand"
-                ItemsSource="{Binding Musics}"
-                
-                >
+                ItemsSource="{Binding Musics}">
                 <CollectionView.EmptyView>
-                    <StackLayout Spacing="10" Margin="0, 100" Padding="20" HorizontalOptions="Center" VerticalOptions="Center">
-                        <Image Source="empty_list.png" HeightRequest="100"/>
-                        <Label HorizontalTextAlignment="Center" Text="No songs found!" FontSize="18" TextColor="Gray"/>
-                        <Button Command="{Binding PlusButtonClickCommand}" HeightRequest="40" MaximumHeightRequest="40" ImageSource="plus_white_icon.png" Text="Start Importing" />
+                    <StackLayout Spacing="10" Margin="0, 100" Padding="20" HorizontalOptions="Center"
+                                 VerticalOptions="Center">
+                        <Image Source="empty_list.png" HeightRequest="100" />
+                        <Label HorizontalTextAlignment="Center" Text="No songs found!" FontSize="18" TextColor="Gray" />
+                        <Button Command="{Binding PlusButtonClickCommand}" HeightRequest="40" MaximumHeightRequest="40"
+                                ImageSource="plus_white_icon.png" Text="Start Importing" />
                     </StackLayout>
 
                 </CollectionView.EmptyView>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:MusicEntity">
-                        <Grid RowDefinitions="*, Auto" >
-                            <Grid.Behaviors>
-                                <!-- <toolkit:TouchBehavior  -->
-                                <!--     LongPressCommand="{Binding Source={RelativeSource AncestorType={x:Type local:MainPageViewModel}}, Path=MusicLongPressCommand}"  -->
-                                <!--     LongPressCommandParameter="{Binding .}" -->
-                                <!--     /> -->
-                                <toolkit:TouchBehavior 
-                                    LongPressCommand="{Binding Source={RelativeSource AncestorType={x:Type local:MainPageViewModel}}, Path=MusicLongPressCommand}" 
-                                    LongPressCommandParameter="{Binding .}"
+                        <ContentView>
+                            <ContentView.Behaviors>
+                                <toolkit:TouchBehavior
+                                    BindingContext="{Binding Source={x:Reference MainPageView}, Path=BindingContext}"
+                                    LongPressCommand="{Binding MusicLongPressCommand}"
+                                    Command="{Binding MusicSelectCommand}"
+                                    LongPressDuration="400"
+                                    IsEnabled="True"
+                                    PressedOpacity="0.6"
                                     />
-                            </Grid.Behaviors>
-                            <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto,Auto">
-                                <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:MainPageViewModel}}, Path=MusicSelectCommand}"
-                                        CommandParameter="{Binding .}" />
-                                </Grid.GestureRecognizers>
-                                <Image Grid.Column="0" Source="{Binding Image}" HeightRequest="40" WidthRequest="40" />
-                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Margin="10, 0">
-                                    <Label TextColor="White" Text="{Binding Title}" />
-                                    <Label FontSize="10" TextColor="White" Text="{Binding Duration}" />
-                                </VerticalStackLayout>
-                                <CheckBox IsVisible="{Binding Source={RelativeSource AncestorType={x:Type local:MainPageViewModel}}, Path=SelectModeOn}" Grid.Column="2" />
-                                <BoxView
-                                    Grid.Column="3"
-                                    BackgroundColor="{StaticResource Primary}"
-                                    WidthRequest="3"
-                                    VerticalOptions="Fill" />
+                            </ContentView.Behaviors>
+                            <Grid RowDefinitions="*, Auto">
+                                <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto,Auto">
+                                    <!-- <Grid.GestureRecognizers> -->
+                                    <!--     <TapGestureRecognizer -->
+                                    <!--         Command="{Binding Source={RelativeSource AncestorType={x:Type local:MainPageViewModel}}, Path=MusicSelectCommand}" -->
+                                    <!--         CommandParameter="{Binding .}" /> -->
+                                    <!-- </Grid.GestureRecognizers> -->
+                                    <Image Grid.Column="0" Source="{Binding Image}" HeightRequest="40"
+                                           WidthRequest="40" />
+                                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Margin="10, 0">
+                                        <Label TextColor="White" Text="{Binding Title}" />
+                                        <Label FontSize="10" TextColor="White" Text="{Binding Duration}" />
+                                    </VerticalStackLayout>
+                                    <CheckBox
+                                        IsVisible="{Binding Source={RelativeSource AncestorType={x:Type local:MainPageViewModel}}, Path=SelectModeOn}"
+                                        Grid.Column="2" />
+                                    <BoxView
+                                        Grid.Column="3"
+                                        BackgroundColor="{StaticResource Primary}"
+                                        WidthRequest="3"
+                                        VerticalOptions="Fill" />
+                                </Grid>
+                                <!-- Spacer -->
+                                <BoxView Grid.Row="1" HeightRequest="5" BackgroundColor="Transparent" />
                             </Grid>
-                            <!-- Spacer -->
-                            <BoxView Grid.Row="1" HeightRequest="5" BackgroundColor="Transparent" />
-                        </Grid>
+                        </ContentView>
 
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
@@ -130,10 +134,9 @@
             ImageSource="plus_white_icon.png" MaximumHeightRequest="40" MaximumWidthRequest="40"
             Background="{StaticResource Accent}"
             Command="{Binding PlusButtonClickCommand}" />
-        <local:MusicContextMenu 
+        <local:MusicContextMenu
             AbsoluteLayout.LayoutBounds="0.5, 0.98, AutoSize, AutoSize"
-            AbsoluteLayout.LayoutFlags="PositionProportional"
-            />
+            AbsoluteLayout.LayoutFlags="PositionProportional" />
 
     </AbsoluteLayout>
 
