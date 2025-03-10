@@ -41,7 +41,6 @@
                             </MultiBinding>
                         </Label.Text>
                     </Label>
-
                 </VerticalStackLayout>
                 <HorizontalStackLayout Grid.Column="1">
                     <partial:IconButton Icon="fast_backward_icon.png"></partial:IconButton>
@@ -128,15 +127,41 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </Grid>
-        <Button
+        <Grid
             AbsoluteLayout.LayoutBounds="0.95,0.98,AutoSize,AutoSize"
             AbsoluteLayout.LayoutFlags="PositionProportional"
-            ImageSource="plus_white_icon.png" MaximumHeightRequest="40" MaximumWidthRequest="40"
-            Background="{StaticResource Accent}"
-            Command="{Binding PlusButtonClickCommand}" />
-        <local:MusicContextMenu
-            AbsoluteLayout.LayoutBounds="0.5, 0.98, AutoSize, AutoSize"
-            AbsoluteLayout.LayoutFlags="PositionProportional" />
+            ColumnDefinitions="Auto, Auto"
+            ColumnSpacing="5"
+            >
+            <Button
+                IsVisible="{Binding SelectModeOn}"
+                Grid.Column="0"
+                Text="Cancel"
+                MaximumHeightRequest="40"
+                Command="{Binding CancelSelectModePressCommand}"
+                />
+            <Button
+                Grid.Column="0"
+                Text="Select"
+                MaximumHeightRequest="40"
+                Command="{Binding SelectModePressCommand}"
+                >
+                <Button.Triggers>
+                    <DataTrigger TargetType="Button" Binding="{Binding SelectModeOn}" Value="False">
+                        <Setter Property="IsVisible" Value="True"/>
+                    </DataTrigger>
+                </Button.Triggers>
+
+            </Button>
+            <Button
+                Grid.Column="1"
+                ImageSource="plus_white_icon.png" MaximumHeightRequest="40" MaximumWidthRequest="40"
+                Background="{StaticResource Accent}"
+                Command="{Binding PlusButtonClickCommand}" />
+        </Grid>
+        <!-- <local:MusicContextMenu -->
+        <!--     AbsoluteLayout.LayoutBounds="0.5, 0.98, AutoSize, AutoSize" -->
+        <!--     AbsoluteLayout.LayoutFlags="PositionProportional" /> -->
 
     </AbsoluteLayout>
 

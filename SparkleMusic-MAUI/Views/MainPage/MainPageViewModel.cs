@@ -168,6 +168,9 @@ public partial class MainPageViewModel : ObservableObject
     private void TurnOnSelectMode()
     {
         SelectModeOn = true;
+    }private void TurnOffSelectMode()
+    {
+        SelectModeOn = false;
     }
 
     [RelayCommand]
@@ -183,6 +186,15 @@ public partial class MainPageViewModel : ObservableObject
         OnPlayMusicRequested?.Invoke();
     }
 
+    [RelayCommand]
+    private async Task OnSelectModePress ()
+    {
+        TurnOnSelectMode();
+    }[RelayCommand]
+    private async Task OnCancelSelectModePress ()
+    {
+        TurnOffSelectMode();
+    }
     [RelayCommand]
     private async Task OnMusicLongPress()
     {
