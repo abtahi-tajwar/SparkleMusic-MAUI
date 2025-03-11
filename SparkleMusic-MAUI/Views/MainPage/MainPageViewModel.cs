@@ -190,7 +190,8 @@ public partial class MainPageViewModel : ObservableObject
     private async Task OnSelectModePress ()
     {
         TurnOnSelectMode();
-    }[RelayCommand]
+    }
+    [RelayCommand]
     private async Task OnCancelSelectModePress ()
     {
         TurnOffSelectMode();

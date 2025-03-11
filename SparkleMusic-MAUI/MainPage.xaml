@@ -72,6 +72,7 @@
                 Grid.Row="2"
                 Margin="22, 0"
                 VerticalOptions="FillAndExpand"
+                x:Name="MusicCollection"
                 ItemsSource="{Binding Musics}">
                 <CollectionView.EmptyView>
                     <StackLayout Spacing="10" Margin="0, 100" Padding="20" HorizontalOptions="Center"
@@ -88,9 +89,10 @@
                         <ContentView>
                             <ContentView.Behaviors>
                                 <toolkit:TouchBehavior
-                                    BindingContext="{Binding Source={x:Reference MainPageView}, Path=BindingContext}"
-                                    LongPressCommand="{Binding MusicLongPressCommand}"
-                                    Command="{Binding MusicSelectCommand}"
+                                    LongPressCommand="{Binding BindingContext.MusicLongPressCommand, Source={x:Reference MainPageView}}"
+                                    Command="{Binding BindingContext.MusicSelectCommand, Source={x:Reference MainPageView}}"
+                                    CommandParameter="{Binding}"
+                                    LongPressCommandParameter="{Binding Source={x:Reference MusicCollection}, Path=BindingContext.Musics}"
                                     LongPressDuration="400"
                                     IsEnabled="True"
                                     PressedOpacity="0.6"
@@ -101,6 +103,11 @@
                                     <!-- <Grid.GestureRecognizers> -->
                                     <!--     <TapGestureRecognizer -->
                                     <!--         Command="{Binding Source={RelativeSource AncestorType={x:Type local:MainPageViewModel}}, Path=MusicSelectCommand}" -->
+                                    <!--         CommandParameter="{Binding .}" /> -->
+                                    <!-- </Grid.GestureRecognizers> -->
+                                    <!-- <Grid.GestureRecognizers> -->
+                                    <!--     <TapGestureRecognizer -->
+                                    <!--         Command="{Binding Source={x:Reference MainPageView}, Path=BindingContext.MusicSelectCommand}" -->
                                     <!--         CommandParameter="{Binding .}" /> -->
                                     <!-- </Grid.GestureRecognizers> -->
                                     <Image Grid.Column="0" Source="{Binding Image}" HeightRequest="40"
@@ -149,6 +156,9 @@
                 <Button.Triggers>
                     <DataTrigger TargetType="Button" Binding="{Binding SelectModeOn}" Value="False">
                         <Setter Property="IsVisible" Value="True"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="Button" Binding="{Binding SelectModeOn}" Value="True">
+                        <Setter Property="IsVisible" Value="False"/>
                     </DataTrigger>
                 </Button.Triggers>
 
