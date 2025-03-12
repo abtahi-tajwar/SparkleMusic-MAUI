@@ -13,7 +13,7 @@ using SparkleMusic_MAUI.Utils;
 
 namespace SparkleMusic_MAUI.Views.MainPage;
 
-class MusicViewModelDto : MusicEntity
+public class MusicViewModelDto : MusicEntity
 {
     [JsonPropertyName("isSelected")] public bool IsSelected { get; set; } = false;
 }
@@ -160,10 +160,20 @@ public partial class MainPageViewModel : ObservableObject
     private void TurnOffSelectMode()
     {
         SelectModeOn = false;
+        foreach (var instance in Musics)
+        {
+            instance.IsSelected = false;
+        }
     }
 
     private void AddOrRemoveMusicToSelected(int musicId)
     {
+        var musicList = Musics.ToList();
+        var musicInstance = musicList.FirstOrDefault(m => m.Id == musicId);
+        if (musicInstance != null) musicInstance.IsSelected = true;
+        Musics = new ObservableCollection<MusicViewModelDto>(musicList);
+        
+
         if (SelectedMusics.Contains(musicId))
         {
             SelectedMusics.Remove(musicId);

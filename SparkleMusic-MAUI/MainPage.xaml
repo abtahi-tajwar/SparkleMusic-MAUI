@@ -90,7 +90,7 @@
 
                 </CollectionView.EmptyView>
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:MusicEntity">
+                    <DataTemplate x:DataType="local:MusicViewModelDto">
                         <ContentView x:Name="MusicCollectionItem">
                             <ContentView.Behaviors>
                                 <toolkit:TouchBehavior
@@ -127,13 +127,16 @@
                                         WidthRequest="10"
                                         IsVisible="{Binding 
                                             Source={RelativeSource AncestorType={x:Type local:MainPageViewModel}}, Path=SelectModeOn}"
-                                        IsChecked="{
-                                            Binding Source={RelativeSource AncestorType={x:Type local:MainPageViewModel}}, 
-                                            Path=SelectedMusics, 
-                                            Converter={StaticResource ArrayContainsConverter},
-                                            ConverterParameter={Binding Source={RelativeSource AncestorType={x:Type local:MainPageViewModel}}}
-                                            }"
-                                        Grid.Column="2" />
+                                        Grid.Column="2">
+                                        <CheckBox.Triggers>
+                                            <DataTrigger TargetType="CheckBox" Binding="{Binding IsSelected}" Value="True">
+                                                <Setter Property="IsChecked" Value="True" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="CheckBox" Binding="{Binding IsSelected}" Value="False">
+                                                <Setter Property="IsChecked" Value="False" />
+                                            </DataTrigger>
+                                        </CheckBox.Triggers>
+                                    </CheckBox>
                                     <BoxView
                                         Grid.Column="3"
                                         BackgroundColor="{StaticResource Primary}"
