@@ -54,11 +54,11 @@ public partial class MainPage : ContentPage
 
     private void PlayMusic()
     {
-        _viewModel.HandlePlay();
+        _viewModel.HandlePlay(MyMediaElement);
     }
 
     private void PauseMusic()
     {
-        _viewModel.HandlePause();
+        _viewModel.HandlePause(MyMediaElement);
     }
 }

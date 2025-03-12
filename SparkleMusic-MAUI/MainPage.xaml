@@ -7,11 +7,16 @@
              xmlns:local="clr-namespace:SparkleMusic_MAUI.Views.MainPage"
              xmlns:model="clr-namespace:SparkleMusic_MAUI.Module.Music.Entity"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-
+             xmlns:converter="clr-namespace:SparkleMusic_MAUI.Utils.Converters"
              x:Name="MainPageView"
              x:DataType="local:MainPageViewModel"
              x:Class="SparkleMusic_MAUI.MainPage"
              Background="{StaticResource BackgroundPrimary}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:ArrayContainsConverters x:Key="ArrayContainsConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <AbsoluteLayout>
         <toolkit:MediaElement
             x:Name="MyMediaElement"
@@ -86,12 +91,13 @@
                 </CollectionView.EmptyView>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:MusicEntity">
-                        <ContentView>
+                        <ContentView x:Name="MusicCollectionItem">
                             <ContentView.Behaviors>
                                 <toolkit:TouchBehavior
+                                    BindingContext="{Binding Source={x:Reference MusicCollectionItem}, Path=BindingContext}"
                                     LongPressCommand="{Binding BindingContext.MusicLongPressCommand, Source={x:Reference MainPageView}}"
                                     Command="{Binding BindingContext.MusicSelectCommand, Source={x:Reference MainPageView}}"
-                                    CommandParameter="{Binding}"
+                                    CommandParameter="{Binding .}"
                                     LongPressCommandParameter="{Binding Source={x:Reference MusicCollection}, Path=BindingContext.Musics}"
                                     LongPressDuration="400"
                                     IsEnabled="True"
@@ -117,7 +123,16 @@
                                         <Label FontSize="10" TextColor="White" Text="{Binding Duration}" />
                                     </VerticalStackLayout>
                                     <CheckBox
-                                        IsVisible="{Binding Source={RelativeSource AncestorType={x:Type local:MainPageViewModel}}, Path=SelectModeOn}"
+                                        HeightRequest="10"
+                                        WidthRequest="10"
+                                        IsVisible="{Binding 
+                                            Source={RelativeSource AncestorType={x:Type local:MainPageViewModel}}, Path=SelectModeOn}"
+                                        IsChecked="{
+                                            Binding Source={RelativeSource AncestorType={x:Type local:MainPageViewModel}}, 
+                                            Path=SelectedMusics, 
+                                            Converter={StaticResource ArrayContainsConverter},
+                                            ConverterParameter={Binding Source={RelativeSource AncestorType={x:Type local:MainPageViewModel}}}
+                                            }"
                                         Grid.Column="2" />
                                     <BoxView
                                         Grid.Column="3"

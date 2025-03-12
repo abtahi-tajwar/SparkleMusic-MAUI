@@ -19,8 +19,8 @@ get_user_input() {
 
     read -p "Enter Pairing Code: " PAIRING_CODE  # No default, must be entered
 
-    read -p "Enter Debugging Port (default: 5555): " DEBUG_PORT
-    DEBUG_PORT=${DEBUG_PORT:-5555}  # Use default if empty
+    read -p "Enter Debugging Port (default: same as Pairing Port - $PAIRING_PORT): " DEBUG_PORT
+    DEBUG_PORT=${DEBUG_PORT:-$PAIRING_PORT}  # Default to Pairing Port if empty
 }
 
 # Function to pair and connect device

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Text.Json.Serialization;
 using System.Windows.Input;
 using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -12,6 +13,11 @@ using SparkleMusic_MAUI.Utils;
 
 namespace SparkleMusic_MAUI.Views.MainPage;
 
+class MusicViewModelDto : MusicEntity
+{
+    [JsonPropertyName("isSelected")] public bool IsSelected { get; set; } = false;
+}
+
 public partial class MainPageViewModel : ObservableObject
 {
     // Public 
@@ -22,7 +28,8 @@ public partial class MainPageViewModel : ObservableObject
     private readonly StorageService _storageService;
     private readonly IAudioService _audioService;
 
-    [ObservableProperty] private ObservableCollection<MusicEntity> musics = new();
+    [ObservableProperty] private ObservableCollection<MusicViewModelDto> musics = new();
+    [ObservableProperty] private ObservableCollection<int> selectedMusics = new();
     [ObservableProperty] private bool musicInitialized = false;
 
     [ObservableProperty] 
@@ -33,8 +40,7 @@ public partial class MainPageViewModel : ObservableObject
     [ObservableProperty] private double currentPlayingMusicDurationInMilliSeconds;
     [ObservableProperty] private string currentPositionTimeString = "00:00";
     [ObservableProperty] private string totalDurationTimeString = "00:00";
-    [ObservableProperty] private MediaElement? customMediaElement;
-    [ObservableProperty] private bool? selectModeOn = false;
+    [ObservableProperty] private bool selectModeOn = false;
 
     [ObservableProperty] private string currentPlayingName = "Default Music";
     [ObservableProperty] private bool isPlaying;
@@ -58,7 +64,64 @@ public partial class MainPageViewModel : ObservableObject
             CurrentPositionTimeString = Helper.ConvertToTimeStringFromMilliseconds(args.Position.TotalMilliseconds);
         });
     }
+    
 
+    #region Initialization
+    public void Initialize(MediaElement mediaElement)
+    {
+        InitializeMusics();
+        RegisterMediaElementEvents(mediaElement);
+    }
+
+    private async void InitializeMusics()
+    {
+        if (MusicInitialized)
+        {
+            return;
+        }
+        try
+        {
+            List<MusicViewModelDto> musics = new();
+            // var musicPlaceholderData = await _musicRepository.GetAllPlaceholders();
+            var musicData = await _musicRepository.GetAll();
+            var fetchedMusic = MusicEntityToMusicViewModelDto(await _audioService.GetAllMusicFilesAsync());
+            musics = MusicEntityToMusicViewModelDto(musicData);
+            foreach (var m in fetchedMusic)
+            {
+                if (musics.Find(item => item.Source == m.Source) == null)
+                {
+                    musics.Add(m);
+                }
+            }
+            // Musics = new ObservableCollection<MusicEntity>(musicPlaceholderData.Concat(musicData).ToList());
+            Musics = new ObservableCollection<MusicViewModelDto>(musics);
+            Debug.WriteLine($"Musics {Musics.Count}");
+            MusicInitialized = true;
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine($"Failed to initialize musics {e.Message}");
+            Console.WriteLine($"Failed to initialize musics {e.Message}");
+        }
+    }
+    #endregion
+
+    #region Effects
+    partial void OnMusicsChanged(ObservableCollection<MusicViewModelDto> value)
+    {
+        Debug.WriteLine($"Total Musics {value.Count}");
+        Console.WriteLine($"Total Musics {value.Count}");
+    }
+
+    partial void OnSelectedMusicsChanged(ObservableCollection<int> value)
+    {
+        Debug.WriteLine($"Total selected musics: {value.Count}");
+        Console.WriteLine($"Total selected musics: {value.Count}");
+    }
+    #endregion
+    
+
+    #region Handlers
     public void HandleUpdateMusicDuration(MediaElement mediaElement)
     {
         TimeSpan duration = mediaElement.Duration;
@@ -76,51 +139,63 @@ public partial class MainPageViewModel : ObservableObject
         mediaElement.SeekTo(position);
     }
 
-    public void Initialize(MediaElement mediaElement)
+    public void HandlePlay(MediaElement? mediaElement)
     {
-        InitializeMusics();
-        CustomMediaElement = mediaElement;
-        RegisterMediaElementEvents(mediaElement);
+        if (mediaElement == null) return;
+        mediaElement.Play();
+        IsPlaying = true;
     }
 
-    private async void InitializeMusics()
+    public void HandlePause(MediaElement? mediaElement)
     {
-        if (MusicInitialized)
+        if (mediaElement == null) return;
+        mediaElement.Pause();
+        IsPlaying = false;
+    }
+
+    private void TurnOnSelectMode()
+    {
+        SelectModeOn = true;
+    }
+    private void TurnOffSelectMode()
+    {
+        SelectModeOn = false;
+    }
+
+    private void AddOrRemoveMusicToSelected(int musicId)
+    {
+        if (SelectedMusics.Contains(musicId))
         {
-            return;
+            SelectedMusics.Remove(musicId);
         }
-        try
+        else
         {
-            List<MusicEntity> musics = new();
-            // var musicPlaceholderData = await _musicRepository.GetAllPlaceholders();
-            var musicData = await _musicRepository.GetAll();
-            var fetchedMusic = await _audioService.GetAllMusicFilesAsync();
-            musics = musicData;
-            foreach (var m in fetchedMusic)
+            SelectedMusics.Add(musicId);
+        }
+    }
+    #endregion
+    
+    
+
+    [RelayCommand]
+    private async Task OnMusicSelect(MusicEntity music)
+    {
+        if (SelectModeOn)
+        {
+            AddOrRemoveMusicToSelected(music.Id);
+        }
+        else
+        {
+            if (music.Source != null)
             {
-                if (musics.Find(item => item.Source == m.Source) == null)
-                {
-                    musics.Add(m);
-                }
+                CurrentPlayingSource = MediaSource.FromFile(Uri.EscapeDataString(music.Source));
             }
-            // Musics = new ObservableCollection<MusicEntity>(musicPlaceholderData.Concat(musicData).ToList());
-            Musics = new ObservableCollection<MusicEntity>(musics);
-            Debug.WriteLine($"Musics {Musics.Count}");
-            MusicInitialized = true;
-        }
-        catch (Exception e)
-        {
-            Debug.WriteLine($"Failed to initialize musics {e.Message}");
-            Console.WriteLine($"Failed to initialize musics {e.Message}");
+
+            CurrentPlayingName = music.Title;
+            OnPlayMusicRequested?.Invoke();
         }
     }
-
-    partial void OnMusicsChanged(ObservableCollection<MusicEntity> value)
-    {
-        Debug.WriteLine($"Total Musics {value.Count}");
-        Console.WriteLine($"Total Musics {value.Count}");
-    }
-
+    
     [RelayCommand]
     private async Task OnPlusButtonClick()
     {
@@ -132,7 +207,7 @@ public partial class MainPageViewModel : ObservableObject
         Random random = new Random();
         foreach (var file in files)
         {
-            var musicEntry = new MusicEntity()
+            var musicEntry = new MusicViewModelDto()
             {
                 Id = 22,
                 Title = file.FileName,
@@ -150,42 +225,6 @@ public partial class MainPageViewModel : ObservableObject
         Debug.WriteLine("File Received");
     }
 
-
-    public void HandlePlay()
-    {
-        if (CustomMediaElement == null) return;
-        CustomMediaElement.Play();
-        IsPlaying = true;
-    }
-
-    public void HandlePause()
-    {
-        if (CustomMediaElement == null) return;
-        CustomMediaElement.Pause();
-        IsPlaying = false;
-    }
-
-    private void TurnOnSelectMode()
-    {
-        SelectModeOn = true;
-    }private void TurnOffSelectMode()
-    {
-        SelectModeOn = false;
-    }
-
-    [RelayCommand]
-    private async Task OnMusicSelect(MusicEntity music)
-    {
-        Debug.WriteLine("MusicSelected");
-        if (music.Source != null)
-        {
-            CurrentPlayingSource = MediaSource.FromFile(Uri.EscapeDataString(music.Source));
-        }
-
-        CurrentPlayingName = music.Title;
-        OnPlayMusicRequested?.Invoke();
-    }
-
     [RelayCommand]
     private async Task OnSelectModePress ()
     {
@@ -201,4 +240,27 @@ public partial class MainPageViewModel : ObservableObject
     {
         TurnOnSelectMode();
     }
+
+    #region Helpers
+
+    List<MusicViewModelDto> MusicEntityToMusicViewModelDto(List<MusicEntity> musicEntities)
+    {
+        List<MusicViewModelDto> musicDtos = musicEntities
+            .Select(item => new MusicViewModelDto
+            {
+                Id = item.Id,
+                Title = item.Title,
+                Author = item.Author,
+                Duration = item.Duration,
+                Image = item.Image,
+                Source = item.Source,
+                Album = item.Album,
+                IsSelected = false // New property added
+            })
+            .ToList();
+        return musicDtos;
+    }
+    
+
+    #endregion
 }

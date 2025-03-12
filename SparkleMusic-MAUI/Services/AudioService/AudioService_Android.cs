@@ -91,6 +91,7 @@ public class AudioService_Android : IAudioService
                 int artistColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.Artist);
                 int albumColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.Album);
                 int durationColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.Duration);
+                int increamentalId = 10000;
 
                 do
                 {
@@ -98,6 +99,7 @@ public class AudioService_Android : IAudioService
                     var durationTimeString = Helper.ConvertToTimeStringFromMilliseconds(duration);
                     musicFiles.Add(new MusicEntity()
                     {
+                        Id = increamentalId,
                         Title = cursor.GetString(titleColumn) ?? "Unknown Title",
                         Author = cursor.GetString(artistColumn) ?? "Unknown Artist",
                         Duration = durationTimeString,
@@ -105,6 +107,7 @@ public class AudioService_Android : IAudioService
                         Image = Helper.GetRandomThumbnail(),
                         Album = cursor.GetString(albumColumn) ?? "Unknown Album",
                     });
+                    increamentalId += 1;
                 } while (cursor.MoveToNext());
 
                 cursor.Close();
